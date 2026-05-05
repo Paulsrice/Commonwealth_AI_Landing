@@ -1,28 +1,60 @@
 ---
-const services = [
+const deployments = [
   {
-    code: 'SVC.01',
-    title: 'Make.com & n8n Workflows',
-    href: '/services/make-n8n-workflows',
+    code: 'DEP.01',
+    title: 'Enterprise AI Integration',
     summary:
-      'Production-grade automation across the SaaS stack you already pay for. We design, document, and deploy workflows that don’t silently rot.',
+      'State-of-the-art LLMs wired directly into your operational data — not generic chatbots glued to the surface.',
+    body:
+      'Claude, GPT, and Gemini deployed as an invisible Chief of Staff: parsing complex data, drafting highly contextual communications, and teeing up decisions so you only have to hit "approve."',
     items: [
-      'Architecture: scenarios, modules, error branches',
-      'Self-healing retries and dead-letter routing',
-      'Observability: run logs, alerts, and audit trails'
-    ]
+      'Anthropic Claude, OpenAI, Google Gemini',
+      'Tool use, retrieval, structured outputs',
+      'Human-in-the-loop guardrails and evals'
+    ],
+    href: '/services/enterprise-ai-integration'
   },
   {
-    code: 'SVC.02',
-    title: 'Claude Integrations',
-    href: '/services/claude-integrations',
+    code: 'DEP.02',
+    title: 'Relational Data Architecture',
     summary:
-      'Custom Claude builds that go past the chatbot phase: agents with tools, structured outputs, and policy guardrails wired into your real workflows.',
+      'A single source of truth instead of fragmented spreadsheets and copy-paste chaos.',
+    body:
+      'We migrate scattered tabs into unified relational databases. One update reflects everywhere, instantly. Built on Supabase, PostgreSQL, and Airtable when the use case fits.',
     items: [
-      'Agent SDK, MCP servers, and tool design',
-      'Retrieval over your docs, tickets, and ledgers',
-      'Evals, prompt versioning, and human-in-the-loop'
-    ]
+      'Schema design, migrations, and audit trails',
+      'Real-time sync, views, and access controls',
+      'Reporting layers your team can actually read'
+    ],
+    href: '/services/relational-data-architecture'
+  },
+  {
+    code: 'DEP.03',
+    title: 'Ecosystem Orchestration',
+    summary:
+      'Conditional routing across the tools you already pay for, so the human middleman stops being the bottleneck.',
+    body:
+      'Whether it’s plugging Google Workspace into your CRM, or bridging marketing software for clean audience management, we orchestrate the conversation between systems.',
+    items: [
+      'Make.com and n8n workflow design',
+      'API and webhook bridging at scale',
+      'Self-healing retries and dead-letter routing'
+    ],
+    href: '/services/ecosystem-orchestration'
+  },
+  {
+    code: 'DEP.04',
+    title: 'Financial & Operational Automation',
+    summary:
+      'Revenue and operations stay perfectly synced — invoices, payouts, and onboarding stop being the rate-limiter.',
+    body:
+      'From Stripe ledger integrations to automated onboarding and dispatch sequences, we automate the grunt work that quietly bleeds your margins every quarter.',
+    items: [
+      'Stripe + accounting reconciliation pipelines',
+      'Onboarding, dispatch, and renewal flows',
+      'Margin and ops dashboards on live data'
+    ],
+    href: '/services/financial-operational-automation'
   }
 ];
 ---
@@ -30,32 +62,40 @@ const services = [
   <div class="container">
     <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
       <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
-        Services
+        What We Deploy
       </div>
-      <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
-        Two stacks. Both stood up by the same hands that designed them.
-      </h2>
+      <div class="col-span-12 md:col-span-9 flex flex-col gap-3">
+        <h2 class="font-display text-display-lg tracking-tightest text-balance">
+          We replace digital duct tape with industrial-grade infrastructure.
+        </h2>
+        <p class="text-ash-400 text-base md:text-lg leading-relaxed max-w-2xl text-pretty">
+          By orchestrating top-tier enterprise platforms, we turn chaotic tasks into silent,
+          reliable systems. Four capabilities, deployed on the stack that fits your operation.
+        </p>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {services.map((s) => (
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+      {deployments.map((d) => (
         <a
-          href={s.href}
-          class="group relative block border border-white/10 bg-carbon-800 hover:border-cobalt-500 transition-colors p-8 sm:p-10 flex flex-col gap-8 min-h-[480px]"
+          href={d.href}
+          class="group bg-carbon-900 hover:bg-carbon-800 transition-colors p-8 sm:p-10 flex flex-col gap-7 min-h-[480px]"
         >
           <div class="flex items-center justify-between meta-strip">
-            <span class="text-cobalt-400">{s.code}</span>
+            <span class="text-cobalt-400">{d.code}</span>
             <span class="text-ash-500 group-hover:text-cobalt-400 transition-colors">Open file →</span>
           </div>
 
-          <h3 class="font-display text-display-md tracking-tightest leading-[0.95]">
-            {s.title}
+          <h3 class="font-display text-display-md tracking-tightest leading-[0.95] text-balance">
+            {d.title}
           </h3>
 
-          <p class="text-ash-300 leading-relaxed text-pretty">{s.summary}</p>
+          <p class="text-ash-200 text-base md:text-lg leading-snug text-pretty">{d.summary}</p>
+
+          <p class="text-ash-400 text-sm md:text-base leading-relaxed text-pretty">{d.body}</p>
 
           <ul class="mt-auto divide-y divide-white/10 border-t border-white/10">
-            {s.items.map((it) => (
+            {d.items.map((it) => (
               <li class="py-3 grid grid-cols-[1.25rem_1fr] items-start gap-3 text-sm text-ash-200">
                 <span class="text-cobalt-400 mt-1.5 inline-block w-2 h-2 bg-current"></span>
                 <span>{it}</span>
@@ -68,15 +108,15 @@ const services = [
 
     <div class="mt-16 grid grid-cols-12 gap-6">
       <p class="col-span-12 md:col-span-7 text-ash-500 text-sm leading-relaxed">
-        Need a one-off scenario or a long-haul retainer? We do both. We also do the
-        un-fun part: documentation that future-you can actually read.
+        Need one-off scenarios or a long-haul retainer? We do both. We also do the un-fun part:
+        documentation that future-you can actually read.
       </p>
       <div class="col-span-12 md:col-span-5 md:text-right">
         <a
           href="#contact"
           class="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-white border-b border-cobalt-500 pb-1 hover:text-cobalt-400 transition-colors"
         >
-          Talk to a partner
+          Book a Systems Audit
           <span aria-hidden="true">→</span>
         </a>
       </div>

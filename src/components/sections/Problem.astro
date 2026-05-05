@@ -1,0 +1,78 @@
+---
+const symptoms = [
+  'A critical invoice slips past its due date.',
+  'A lease renewal falls through the cracks.',
+  'A lead gets dropped because nobody copy-pasted from one sheet to another.',
+  'Slack lights up at 11 p.m. asking what the latest version actually is.',
+  'A new hire spends week one untangling tribal knowledge.'
+];
+---
+<section id="diagnosis" class="relative bg-carbon py-24 md:py-36 border-t border-cobalt-500/30 overflow-hidden">
+  {/* Cobalt accent stripe top-left */}
+  <div aria-hidden="true" class="absolute top-0 left-0 h-1 w-32 bg-cobalt-500"></div>
+
+  <div class="container">
+    {/* Kicker + headline */}
+    <div class="grid grid-cols-12 gap-6 items-end">
+      <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">
+        Diagnosis
+      </div>
+      <h2 class="col-span-12 md:col-span-9 font-display text-display-xl tracking-tightest text-balance">
+        Your operation is scaling.<br/>
+        Your infrastructure is <span class="text-cobalt-400">fragile</span>.
+      </h2>
+    </div>
+
+    {/* Body + symptoms list */}
+    <div class="mt-16 md:mt-24 grid grid-cols-12 gap-x-6 gap-y-12 items-start">
+      <div class="col-span-12 md:col-span-6 space-y-6 text-ash-300 text-base md:text-lg leading-relaxed">
+        <p class="text-pretty">
+          You&rsquo;ve built a successful business through sheer force of will. The backend is
+          a chaotic web of isolated tools, frantic Slack messages, and manual data entry held
+          together by the people who&rsquo;ve been there longest.
+        </p>
+        <p class="text-pretty">
+          You lie awake wondering whether something slipped through the cracks &mdash; an
+          invoice, a renewal, a lead, an onboarding step. The next morning you go fix it,
+          and on a long enough timeline, that&rsquo;s the work.
+        </p>
+        <p class="font-display text-xl md:text-2xl tracking-tight text-white text-balance pt-2">
+          You don&rsquo;t have an operations problem.<br class="hidden sm:block"/>
+          You have an architecture problem.
+        </p>
+      </div>
+
+      {/* Symptoms spec card */}
+      <div class="col-span-12 md:col-span-5 md:col-start-8 border border-white/10 bg-carbon-800">
+        <div class="px-6 sm:px-8 py-5 border-b border-white/10 flex items-center justify-between meta-strip">
+          <span class="text-ash-300">Common symptoms</span>
+          <span class="text-cobalt-400">File 02.01</span>
+        </div>
+        <ul class="divide-y divide-white/10">
+          {symptoms.map((s, i) => (
+            <li class="grid grid-cols-[3rem_1fr] gap-3 items-start px-6 sm:px-8 py-4 text-sm md:text-base text-ash-200">
+              <span class="meta-strip text-cobalt-400 mt-1">{`0${i + 1}`}</span>
+              <span class="text-pretty">{s}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    {/* Pivot — "We build the architecture" */}
+    <div class="mt-20 md:mt-28 grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-9 md:col-start-3 border-t border-cobalt-500/40 pt-10 md:pt-14">
+        <div class="meta-strip text-cobalt-400 mb-5">Resolution</div>
+        <h3 class="font-display text-display-lg tracking-tightest text-cobalt-500 text-balance">
+          We build the architecture.
+        </h3>
+        <p class="mt-6 max-w-2xl text-ash-300 text-base md:text-lg leading-relaxed text-pretty">
+          We don&rsquo;t write theoretical whitepapers or sell you bloated SaaS subscriptions.
+          We get our hands dirty in the internal mechanics of your business, integrating the
+          world&rsquo;s most powerful platforms to build robust, automated systems that run
+          flawlessly in the background.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
