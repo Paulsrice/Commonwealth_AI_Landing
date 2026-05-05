@@ -1,0 +1,81 @@
+---
+const studies = [
+  {
+    code: 'CS.01',
+    sector: 'Professional Services',
+    title: 'A 12-attorney firm replaced its intake stack in 14 days.',
+    impact: '−62% intake-to-engagement cycle',
+    href: '/case-studies/legal-intake'
+  },
+  {
+    code: 'CS.02',
+    sector: 'Real Estate',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    href: '/case-studies/brokerage-pipeline'
+  },
+  {
+    code: 'CS.03',
+    sector: 'Construction',
+    title: 'Field RFIs to office approvals in a single rhythm.',
+    impact: '−41% rework on submittals',
+    href: '/case-studies/field-to-office'
+  }
+];
+---
+<section id="case-studies" class="relative bg-carbon py-24 md:py-36 border-t border-white/10 overflow-hidden">
+  <div class="container">
+    <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+      <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+        Case Studies
+      </div>
+      <div class="col-span-12 md:col-span-9 flex flex-col gap-3">
+        <h2 class="font-display text-display-lg tracking-tightest text-balance">
+          Receipts, not slides.
+        </h2>
+        <p class="text-ash-400 text-base md:text-lg leading-relaxed max-w-xl text-pretty">
+          Every engagement gets written up. What we built, what it cost, what it returned, and
+          what we’d do differently.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border border-white/10">
+      {studies.map((s) => (
+        <a
+          href={s.href}
+          class="group bg-carbon p-8 sm:p-10 flex flex-col gap-8 min-h-[400px] hover:bg-carbon-800 transition-colors"
+        >
+          <div class="flex items-center justify-between meta-strip">
+            <span class="text-cobalt-400">{s.code}</span>
+            <span class="text-ash-500">{s.sector}</span>
+          </div>
+
+          <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance">
+            {s.title}
+          </h3>
+
+          <div class="mt-auto flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+            <div>
+              <div class="meta-strip text-ash-500 mb-1">Impact</div>
+              <div class="font-display text-cobalt-400 text-base">{s.impact}</div>
+            </div>
+            <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">
+              Read →
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 flex justify-end">
+      <a
+        href="/case-studies"
+        class="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ash-300 hover:text-white transition-colors"
+      >
+        View all case studies
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

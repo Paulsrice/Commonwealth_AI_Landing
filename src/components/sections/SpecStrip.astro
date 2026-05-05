@@ -1,0 +1,25 @@
+---
+const tokens = [
+  'Make.com',
+  'n8n',
+  'Supabase',
+  'Claude',
+  'Airtable',
+  'PostgreSQL',
+  'MCP',
+  'Agent SDK',
+  'Astro',
+  'shadcn/ui'
+];
+const lap = [...tokens, ...tokens]; // double the tape so the loop is seamless
+---
+<section class="relative bg-carbon-950 border-y border-white/10 py-7 md:py-9 overflow-hidden">
+  <div class="flex w-max gap-12 md:gap-16 whitespace-nowrap font-display text-2xl md:text-4xl tracking-tightest animate-marquee">
+    {lap.map((t, i) => (
+      <span class="flex items-center gap-12 md:gap-16">
+        <span class="text-ash-300">{t}</span>
+        <span class="text-cobalt-500" aria-hidden="true">{i % 2 === 0 ? '/' : '●'}</span>
+      </span>
+    ))}
+  </div>
+</section>

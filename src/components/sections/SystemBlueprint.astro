@@ -1,0 +1,61 @@
+---
+import Logo from '../Logo.astro';
+import Wireframe from '../Wireframe.astro';
+---
+<section class="relative bg-carbon py-24 md:py-36 overflow-hidden border-t border-white/5">
+  {/* Decorative vertical hairlines */}
+  <div aria-hidden="true" class="absolute inset-y-0 left-1/2 w-px bg-white/5 hidden md:block"></div>
+
+  <div class="container grid grid-cols-12 gap-x-6 gap-y-12 md:gap-y-20">
+    {/* Headline left */}
+    <div class="col-span-12 md:col-span-6">
+      <div class="meta-strip text-cobalt-400 mb-6 border-t border-cobalt-500/30 pt-4 max-w-xs">
+        <span>The System</span>
+      </div>
+      <h2 class="font-display text-display-xl tracking-tightest text-cobalt-500 text-balance">
+        An integrated automation system that reduces risk and provides certainty.
+      </h2>
+    </div>
+
+    {/* Wireframe right */}
+    <div class="col-span-12 md:col-span-6 md:col-start-7">
+      <div class="aspect-[4/3] w-full text-cobalt-500/85">
+        <Wireframe />
+      </div>
+
+      {/* Drawing metadata block */}
+      <div class="mt-6 border border-cobalt-500/40 grid grid-cols-[auto_1fr] divide-y divide-cobalt-500/20">
+        <div class="row-span-3 p-4 sm:p-5 border-r border-cobalt-500/40 flex items-center justify-center bg-cobalt-500/5">
+          <Logo iconOnly class="w-10 h-auto text-cobalt-500" />
+        </div>
+        <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-0 text-cobalt-200 meta-strip">
+          <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+            <dt class="text-cobalt-400">Title</dt>
+            <dd>Standard Workflow Blueprint</dd>
+          </div>
+          <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+            <dt class="text-cobalt-400">DWG No.</dt>
+            <dd>158.01.00</dd>
+          </div>
+          <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6">
+            <dt class="text-cobalt-400">Scale</dt>
+            <dd>1 / 100</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    {/* Body copy bottom-left */}
+    <div class="col-span-12 md:col-span-5 md:col-start-1">
+      <p class="text-ash-300 text-base md:text-lg leading-relaxed max-w-md">
+        We integrate intake, operations, and reporting inside a single digital framework.
+        Design, build, and run on one stack. The result is fewer dropped balls,
+        faster cycles, and a system you can hand off without losing the thread.
+      </p>
+      <p class="mt-6 text-ash-500 text-sm leading-relaxed max-w-md">
+        Built on Make.com, n8n, Supabase, and Claude. Documented like an engineering firm,
+        delivered like a small team that gives a damn.
+      </p>
+    </div>
+  </div>
+</section>

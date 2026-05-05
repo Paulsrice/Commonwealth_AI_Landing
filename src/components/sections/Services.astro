@@ -1,0 +1,85 @@
+---
+const services = [
+  {
+    code: 'SVC.01',
+    title: 'Make.com & n8n Workflows',
+    href: '/services/make-n8n-workflows',
+    summary:
+      'Production-grade automation across the SaaS stack you already pay for. We design, document, and deploy workflows that don’t silently rot.',
+    items: [
+      'Architecture: scenarios, modules, error branches',
+      'Self-healing retries and dead-letter routing',
+      'Observability: run logs, alerts, and audit trails'
+    ]
+  },
+  {
+    code: 'SVC.02',
+    title: 'Claude Integrations',
+    href: '/services/claude-integrations',
+    summary:
+      'Custom Claude builds that go past the chatbot phase: agents with tools, structured outputs, and policy guardrails wired into your real workflows.',
+    items: [
+      'Agent SDK, MCP servers, and tool design',
+      'Retrieval over your docs, tickets, and ledgers',
+      'Evals, prompt versioning, and human-in-the-loop'
+    ]
+  }
+];
+---
+<section id="services" class="relative bg-carbon-900 py-24 md:py-36 border-t border-white/10">
+  <div class="container">
+    <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+      <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+        Services
+      </div>
+      <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+        Two stacks. Both stood up by the same hands that designed them.
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {services.map((s) => (
+        <a
+          href={s.href}
+          class="group relative block border border-white/10 bg-carbon-800 hover:border-cobalt-500 transition-colors p-8 sm:p-10 flex flex-col gap-8 min-h-[480px]"
+        >
+          <div class="flex items-center justify-between meta-strip">
+            <span class="text-cobalt-400">{s.code}</span>
+            <span class="text-ash-500 group-hover:text-cobalt-400 transition-colors">Open file →</span>
+          </div>
+
+          <h3 class="font-display text-display-md tracking-tightest leading-[0.95]">
+            {s.title}
+          </h3>
+
+          <p class="text-ash-300 leading-relaxed text-pretty">{s.summary}</p>
+
+          <ul class="mt-auto divide-y divide-white/10 border-t border-white/10">
+            {s.items.map((it) => (
+              <li class="py-3 grid grid-cols-[1.25rem_1fr] items-start gap-3 text-sm text-ash-200">
+                <span class="text-cobalt-400 mt-1.5 inline-block w-2 h-2 bg-current"></span>
+                <span>{it}</span>
+              </li>
+            ))}
+          </ul>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-16 grid grid-cols-12 gap-6">
+      <p class="col-span-12 md:col-span-7 text-ash-500 text-sm leading-relaxed">
+        Need a one-off scenario or a long-haul retainer? We do both. We also do the
+        un-fun part: documentation that future-you can actually read.
+      </p>
+      <div class="col-span-12 md:col-span-5 md:text-right">
+        <a
+          href="#contact"
+          class="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-white border-b border-cobalt-500 pb-1 hover:text-cobalt-400 transition-colors"
+        >
+          Talk to a partner
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

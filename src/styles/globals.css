@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Shadcn semantic tokens (dark-first) */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 226 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 11%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 11%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 226 100% 59%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 226 100% 59%;
+    --radius: 0.125rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    background: #0a0a0a;
+    color: #f5f5f5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  body {
+    @apply bg-carbon text-foreground font-sans;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-cobalt-500 text-white;
+  }
+}
+
+@layer components {
+  /* Editorial grid lines (used as overlay on hero / sections) */
+  .grid-overlay {
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  }
+
+  /* Vertical reveal on scroll-in (no JS) */
+  .meta-strip {
+    @apply font-mono text-[10px] sm:text-xs uppercase tracking-[0.18em];
+  }
+
+  /* Hairline between rows in spec sheets */
+  .spec-row {
+    @apply grid grid-cols-[auto_1fr] gap-6 py-3 border-t border-current/40 first:border-t-0 first:pt-0;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+}

@@ -1,0 +1,35 @@
+---
+interface Props {
+  class?: string;
+  /** Render only the icon mark, no wordmark. */
+  iconOnly?: boolean;
+}
+const { class: className = '', iconOnly = false } = Astro.props;
+---
+{iconOnly ? (
+  <svg
+    viewBox="0 0 80 64"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    class={className}
+  >
+    {/* Heavy "C" frame */}
+    <path d="M0 0 H62 V14 H14 V50 H62 V64 H0 Z" />
+    {/* AI chip accent ticks */}
+    <rect x="62" y="20" width="18" height="8" />
+    <rect x="62" y="36" width="18" height="8" />
+  </svg>
+) : (
+  <svg
+    viewBox="0 0 80 64"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-label="Commonwealth AI Partners"
+    class={className}
+  >
+    <path d="M0 0 H62 V14 H14 V50 H62 V64 H0 Z" />
+    <rect x="62" y="20" width="18" height="8" />
+    <rect x="62" y="36" width="18" height="8" />
+  </svg>
+)}

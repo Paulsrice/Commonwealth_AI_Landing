@@ -1,0 +1,40 @@
+---
+import '@/styles/globals.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Commonwealth AI Partners — Systems you can swear by.',
+  description = 'A standup AI and automation partner for operators who can’t afford to fake it. We build the systems. Then we keep them running.'
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en" class="bg-carbon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {/* Fonts */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
+
+    {/* SEO */}
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0A0A0A" />
+  </head>
+  <body class="font-sans text-foreground bg-carbon antialiased selection:bg-cobalt-500 selection:text-white">
+    <slot />
+  </body>
+</html>

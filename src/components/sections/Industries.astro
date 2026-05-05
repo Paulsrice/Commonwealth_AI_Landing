@@ -1,0 +1,69 @@
+---
+const industries = [
+  {
+    code: 'IND.01',
+    title: 'Professional Services',
+    href: '/industries/professional-services',
+    body:
+      'Law firms, accounting, agencies, and consultancies whose margins live and die by document throughput, intake fidelity, and billable-hour discipline.',
+    items: [
+      'Intake automation and lead routing',
+      'Document generation, redlining, and review queues',
+      'Billing, time-capture, and reconciliation pipelines'
+    ]
+  },
+  {
+    code: 'IND.02',
+    title: 'Real Estate & Construction',
+    href: '/industries/real-estate-construction',
+    body:
+      'Brokerages, GCs, developers, and property managers running multi-stage projects across spreadsheets, email threads, and a half-installed CRM.',
+    items: [
+      'Deal pipeline + MLS syndication',
+      'Project status and submittal tracking',
+      'Field-to-office reporting and compliance logs'
+    ]
+  }
+];
+---
+<section id="industries" class="relative bg-carbon py-24 md:py-36 border-t border-white/10">
+  <div class="container">
+    <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+      <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+        Industries
+      </div>
+      <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+        We go deep in two markets. <span class="text-ash-500">For now.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {industries.map((i) => (
+        <a
+          href={i.href}
+          class="group relative block border border-white/10 bg-carbon-800 hover:border-cobalt-500 transition-colors p-8 sm:p-10 flex flex-col gap-8 min-h-[480px]"
+        >
+          <div class="flex items-center justify-between meta-strip">
+            <span class="text-cobalt-400">{i.code}</span>
+            <span class="text-ash-500 group-hover:text-cobalt-400 transition-colors">Open file →</span>
+          </div>
+
+          <h3 class="font-display text-display-md tracking-tightest leading-[0.95]">
+            {i.title}
+          </h3>
+
+          <p class="text-ash-300 leading-relaxed text-pretty">{i.body}</p>
+
+          <ul class="mt-auto divide-y divide-white/10 border-t border-white/10">
+            {i.items.map((it) => (
+              <li class="py-3 grid grid-cols-[1.25rem_1fr] items-start gap-3 text-sm text-ash-200">
+                <span class="text-cobalt-400 mt-1.5 inline-block w-2 h-2 bg-current"></span>
+                <span>{it}</span>
+              </li>
+            ))}
+          </ul>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
