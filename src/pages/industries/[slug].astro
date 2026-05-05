@@ -1,0 +1,29 @@
+---
+import Stub from '@/layouts/Stub.astro';
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'professional-services' },
+      props: {
+        title: 'Professional Services',
+        code: 'IND.01',
+        description:
+          'Law firms, accounting, agencies, and consultancies whose margins live and die by document throughput, intake fidelity, and billable-hour discipline.'
+      }
+    },
+    {
+      params: { slug: 'real-estate-construction' },
+      props: {
+        title: 'Real Estate & Construction',
+        code: 'IND.02',
+        description:
+          'Brokerages, GCs, developers, and property managers running multi-stage projects across spreadsheets, email threads, and a half-installed CRM.'
+      }
+    }
+  ];
+}
+
+const { title, code, description } = Astro.props;
+---
+<Stub kicker="Industries" title={title} code={code} description={description} />

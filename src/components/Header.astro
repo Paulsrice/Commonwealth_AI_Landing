@@ -23,7 +23,9 @@ const isLight = variant === 'light';
     <nav class="flex items-stretch gap-2" aria-label="Primary">
       <button
         type="button"
+        data-open-menu
         aria-label="Open menu"
+        aria-controls="site-menu"
         class:list={[
           'group inline-flex items-center justify-between gap-5 h-11 sm:h-14 px-4 sm:px-6 font-mono text-[11px] uppercase tracking-[0.16em] border transition-colors',
           isLight

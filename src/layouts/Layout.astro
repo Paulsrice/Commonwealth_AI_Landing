@@ -1,5 +1,6 @@
 ---
 import '@/styles/globals.css';
+import SiteMenu from '@/components/SiteMenu.astro';
 
 interface Props {
   title?: string;
@@ -36,5 +37,6 @@ const {
   </head>
   <body class="font-sans text-foreground bg-carbon antialiased selection:bg-cobalt-500 selection:text-white">
     <slot />
+    <SiteMenu />
   </body>
 </html>

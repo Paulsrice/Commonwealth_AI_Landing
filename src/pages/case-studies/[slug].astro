@@ -1,0 +1,38 @@
+---
+import Stub from '@/layouts/Stub.astro';
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'legal-intake' },
+      props: {
+        title: 'A 12-attorney firm replaced its intake stack in 14 days.',
+        code: 'CS.01',
+        description:
+          '−62% intake-to-engagement cycle. Full write-up coming soon. Reach out if you want the architecture deck in advance.'
+      }
+    },
+    {
+      params: { slug: 'brokerage-pipeline' },
+      props: {
+        title: 'Brokerage pipeline fed straight into ledger and reporting.',
+        code: 'CS.02',
+        description:
+          '+1,800 hrs/yr returned to producers. Full write-up coming soon. Reach out if you want the architecture deck in advance.'
+      }
+    },
+    {
+      params: { slug: 'field-to-office' },
+      props: {
+        title: 'Field RFIs to office approvals in a single rhythm.',
+        code: 'CS.03',
+        description:
+          '−41% rework on submittals. Full write-up coming soon. Reach out if you want the architecture deck in advance.'
+      }
+    }
+  ];
+}
+
+const { title, code, description } = Astro.props;
+---
+<Stub kicker="Case Study" title={title} code={code} description={description} />

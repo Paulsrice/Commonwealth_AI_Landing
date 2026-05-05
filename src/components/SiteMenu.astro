@@ -1,0 +1,211 @@
+---
+import Logo from './Logo.astro';
+
+const primary = [
+  { label: 'Philosophy', href: '/#philosophy' },
+  {
+    label: 'What We Deploy',
+    href: '/#services',
+    expandable: true,
+    children: [
+      { label: 'Enterprise AI Integration', href: '/services/enterprise-ai-integration' },
+      { label: 'Relational Data Architecture', href: '/services/relational-data-architecture' },
+      { label: 'Ecosystem Orchestration', href: '/services/ecosystem-orchestration' },
+      { label: 'Financial & Operational Automation', href: '/services/financial-operational-automation' },
+      { label: 'View all', href: '/services' }
+    ]
+  },
+  {
+    label: 'Industries',
+    href: '/industries',
+    expandable: true,
+    children: [
+      { label: 'Professional Services', href: '/industries/professional-services' },
+      { label: 'Real Estate & Construction', href: '/industries/real-estate-construction' },
+      { label: 'View all', href: '/industries' }
+    ]
+  },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Contact', href: '/#contact' }
+];
+
+const secondary = [
+  { label: 'About', href: '/about' },
+  { label: 'Careers', href: '/about#careers' },
+  { label: 'Privacy', href: '/privacy' },
+  { label: 'Terms', href: '/terms' }
+];
+---
+<aside
+  id="site-menu"
+  data-open="false"
+  aria-hidden="true"
+  class="fixed inset-0 z-[100] pointer-events-none"
+>
+  {/* Backdrop */}
+  <div
+    data-menu-backdrop
+    class="absolute inset-0 bg-carbon/40 backdrop-blur-md opacity-0 transition-opacity duration-300"
+  ></div>
+
+  {/* Panel */}
+  <div
+    data-menu-panel
+    role="dialog"
+    aria-modal="true"
+    aria-label="Site navigation"
+    class="absolute top-0 right-0 h-full w-full max-w-md md:max-w-lg bg-white text-carbon translate-x-full transition-transform duration-300 ease-out flex flex-col overflow-hidden"
+  >
+    {/* Panel header */}
+    <div class="flex items-center justify-between px-6 sm:px-8 h-20 border-b border-carbon/10">
+      <a href="/" class="flex items-center gap-2.5">
+        <Logo class="h-7 w-auto text-carbon" />
+        <span class="font-display text-lg font-bold tracking-tight leading-none">
+          Commonwealth AI<span class="text-cobalt-500">.</span>
+        </span>
+      </a>
+      <button
+        type="button"
+        data-close-menu
+        aria-label="Close menu"
+        class="h-11 w-11 flex items-center justify-center text-2xl text-carbon hover:text-cobalt-500 transition-colors"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    {/* Primary nav */}
+    <nav class="flex-1 overflow-y-auto" aria-label="Primary navigation">
+      <ul class="divide-y divide-carbon/10">
+        {primary.map((item) => (
+          item.expandable ? (
+            <li>
+              <details class="group">
+                <summary class="px-6 sm:px-8 py-6 sm:py-7 font-display text-3xl sm:text-4xl font-bold tracking-tightest leading-none flex items-center justify-between cursor-pointer list-none hover:bg-cobalt-500 hover:text-white transition-colors">
+                  <span>{item.label}</span>
+                  <span class="text-2xl font-normal transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <ul class="bg-ash-100 divide-y divide-carbon/10">
+                  {item.children!.map((c) => (
+                    <li>
+                      <a
+                        href={c.href}
+                        data-menu-link
+                        class="block px-8 sm:px-12 py-4 text-base font-medium hover:bg-cobalt-500 hover:text-white transition-colors flex items-center justify-between gap-4"
+                      >
+                        <span>{c.label}</span>
+                        <span aria-hidden="true" class="text-cobalt-500 group-hover/item:text-white">→</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                data-menu-link
+                class="block px-6 sm:px-8 py-6 sm:py-7 font-display text-3xl sm:text-4xl font-bold tracking-tightest leading-none hover:bg-cobalt-500 hover:text-white transition-colors"
+              >
+                {item.label}
+              </a>
+            </li>
+          )
+        ))}
+      </ul>
+    </nav>
+
+    {/* Panel footer */}
+    <div class="border-t border-carbon/10 px-6 sm:px-8 py-6 grid grid-cols-2 gap-6 items-end">
+      <ul class="space-y-2 meta-strip">
+        {secondary.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              data-menu-link
+              class="text-carbon hover:text-cobalt-500 transition-colors"
+            >
+              {s.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="flex flex-col items-end gap-3 meta-strip">
+        <a
+          href="https://linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-carbon hover:text-cobalt-500 transition-colors inline-flex items-center gap-2"
+        >
+          LinkedIn
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          href="mailto:hello@commonwealthai.partners"
+          class="text-carbon hover:text-cobalt-500 transition-colors text-right"
+        >
+          hello@commonwealthai.partners
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script>
+  // Slide-out menu controller
+  const menu = document.getElementById('site-menu') as HTMLElement | null;
+  if (menu) {
+    const backdrop = menu.querySelector('[data-menu-backdrop]') as HTMLElement;
+    const panel = menu.querySelector('[data-menu-panel]') as HTMLElement;
+    const triggers = document.querySelectorAll<HTMLElement>('[data-open-menu]');
+    const closes = menu.querySelectorAll<HTMLElement>('[data-close-menu]');
+    const internalLinks = menu.querySelectorAll<HTMLAnchorElement>('a[data-menu-link][href^="/#"], a[data-menu-link][href^="#"]');
+
+    function open() {
+      menu!.dataset.open = 'true';
+      menu!.setAttribute('aria-hidden', 'false');
+      menu!.classList.remove('pointer-events-none');
+      panel.classList.remove('translate-x-full');
+      backdrop.classList.remove('opacity-0');
+      backdrop.classList.add('opacity-100');
+      document.documentElement.style.overflow = 'hidden';
+      // Focus the close button for keyboard users
+      const closeBtn = menu!.querySelector<HTMLButtonElement>('[data-close-menu]');
+      setTimeout(() => closeBtn?.focus(), 100);
+    }
+
+    function close() {
+      menu!.dataset.open = 'false';
+      menu!.setAttribute('aria-hidden', 'true');
+      panel.classList.add('translate-x-full');
+      backdrop.classList.add('opacity-0');
+      backdrop.classList.remove('opacity-100');
+      document.documentElement.style.overflow = '';
+      // Wait for transition before disabling pointer events
+      setTimeout(() => {
+        if (menu!.dataset.open === 'false') {
+          menu!.classList.add('pointer-events-none');
+        }
+      }, 300);
+    }
+
+    triggers.forEach((t) => t.addEventListener('click', open));
+    closes.forEach((c) => c.addEventListener('click', close));
+    backdrop.addEventListener('click', close);
+
+    // ESC closes
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.dataset.open === 'true') {
+        close();
+      }
+    });
+
+    // Auto-close after clicking an in-page anchor (so the user actually sees the section)
+    internalLinks.forEach((a) => {
+      a.addEventListener('click', () => {
+        setTimeout(close, 80);
+      });
+    });
+  }
+</script>

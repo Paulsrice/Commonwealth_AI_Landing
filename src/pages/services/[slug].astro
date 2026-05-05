@@ -1,0 +1,47 @@
+---
+import Stub from '@/layouts/Stub.astro';
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'enterprise-ai-integration' },
+      props: {
+        title: 'Enterprise AI Integration',
+        code: 'DEP.01',
+        description:
+          'Claude, GPT, and Gemini deployed as an invisible Chief of Staff. State-of-the-art LLMs wired directly into your operational data — not generic chatbots glued to the surface.'
+      }
+    },
+    {
+      params: { slug: 'relational-data-architecture' },
+      props: {
+        title: 'Relational Data Architecture',
+        code: 'DEP.02',
+        description:
+          'A single source of truth instead of fragmented spreadsheets and copy-paste chaos. We migrate scattered tabs into unified relational databases on Supabase, PostgreSQL, or Airtable.'
+      }
+    },
+    {
+      params: { slug: 'ecosystem-orchestration' },
+      props: {
+        title: 'Ecosystem Orchestration',
+        code: 'DEP.03',
+        description:
+          'Conditional routing across the tools you already pay for. We orchestrate the conversation between systems so the human middleman stops being the bottleneck.'
+      }
+    },
+    {
+      params: { slug: 'financial-operational-automation' },
+      props: {
+        title: 'Financial & Operational Automation',
+        code: 'DEP.04',
+        description:
+          'Revenue and operations stay perfectly synced. Stripe ledger integrations, automated onboarding, dispatch sequences — invoices and payouts reconcile themselves while you focus on the work.'
+      }
+    }
+  ];
+}
+
+const { title, code, description } = Astro.props;
+---
+<Stub kicker="What We Deploy" title={title} code={code} description={description} />
