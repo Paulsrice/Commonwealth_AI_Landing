@@ -1,0 +1,37 @@
+# Don't ship the install/build outputs — the Dockerfile recreates them
+node_modules
+node_modules.bak*
+dist
+.astro
+
+# Source control
+.git
+.gitignore
+.github
+
+# Backup leftovers from local install hiccups
+package-lock.bak*
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / OS noise
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cloud config (only used by Cloud Build, not needed in the image)
+cloudbuild.yaml
+.gcloudignore
+
+# Repo docs
+README.md
