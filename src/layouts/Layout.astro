@@ -1,14 +1,22 @@
 ---
 import '@/styles/globals.css';
+import Header from '@/components/Header.astro';
 import SiteMenu from '@/components/SiteMenu.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  /**
+   * Render the persistent cobalt header bar + site menu. Default `true`.
+   * Set to `false` for ad landing pages or other routes that want a bare
+   * canvas with no global navigation chrome.
+   */
+  showHeader?: boolean;
 }
 const {
   title = 'Commonwealth AI Partners — Systems you can swear by.',
-  description = 'A standup AI and automation partner for operators who can’t afford to fake it. We build the systems. Then we keep them running.'
+  description = 'A standup AI and automation partner for operators who can’t afford to fake it. We build the systems. Then we keep them running.',
+  showHeader = true
 } = Astro.props;
 ---
 <!doctype html>
@@ -33,10 +41,11 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="theme-color" content="#2E5BFF" />
   </head>
   <body class="font-sans text-foreground bg-carbon antialiased selection:bg-cobalt-500 selection:text-white">
+    {showHeader && <Header />}
     <slot />
-    <SiteMenu />
+    {showHeader && <SiteMenu />}
   </body>
 </html>
