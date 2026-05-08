@@ -3,15 +3,8 @@ import Stub from '@/layouts/Stub.astro';
 
 export function getStaticPaths() {
   return [
-    {
-      params: { slug: 'legal-intake' },
-      props: {
-        title: 'A 12-attorney firm replaced its intake stack in 14 days.',
-        code: 'CS.01',
-        description:
-          '−62% intake-to-engagement cycle. Full write-up coming soon. Reach out if you want the architecture deck in advance.'
-      }
-    },
+    // CS.01 (legal-intake) is exempt — dedicated template page lives at
+    // src/pages/case-studies/legal-intake.astro
     {
       params: { slug: 'brokerage-pipeline' },
       props: {

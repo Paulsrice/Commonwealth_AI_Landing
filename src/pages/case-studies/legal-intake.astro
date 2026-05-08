@@ -1,0 +1,442 @@
+---
+// =============================================================================
+// CASE STUDY PAGE TEMPLATE
+// =============================================================================
+// This is the canonical case study page. Copy this file when writing other
+// /case-studies/{slug}.astro pages and edit the content blocks.
+//
+// The case study is the highest-leverage content on the site. The visitor
+// is at the bottom of the funnel: they want to verify we're real before
+// they book the call. Patterns intentionally applied here:
+//
+//   1. Headline IS the outcome (not the project name)
+//   2. Client at-a-glance card — industry, size, scope, duration, stack
+//   3. Pull quote from a real named human at the client
+//   4. Problem → Approach → Build → Result narrative arc
+//   5. Quantified outcomes in a dedicated metrics block
+//   6. "What we'd do differently" — the brutally honest reflection. Few
+//      consultancies write this section. It's the highest trust signal.
+//   7. Architecture diagram so technical readers can verify substance
+//   8. Related case studies + final CTA at the bottom
+//
+// All numbers in this template are illustrative. Replace with real ones
+// (and get client permission before naming them) before going live.
+//
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'CS.01';
+const sector = 'Professional Services / Law';
+const headline = 'A 12-attorney firm replaced its intake stack in 14 days.';
+const lede = 'Intake-to-engagement cycle dropped 62%. Partner time on routine NDAs went to zero.';
+
+const client = {
+  name: 'Mid-Atlantic litigation boutique',
+  size: '12 attorneys, 4 paralegals, 2 admins',
+  scope: 'Inbound lead intake → conflicts check → engagement letter',
+  duration: '14 days, fixed-fee',
+  stack: 'Clio, Google Workspace, Make.com, Supabase, Anthropic Claude'
+};
+
+const pullQuote = {
+  body: "We didn't realize how much of our intake was a senior attorney pretending to be a paralegal until the system started doing it. The first week was a relief. The second week, two associates asked what else we could automate.",
+  attribution: '— Managing Partner, on the kickoff call after week one'
+};
+
+const metrics = [
+  { value: '−62%', label: 'Intake-to-engagement cycle', detail: 'From 9.4 days median to 3.6' },
+  { value: '−74%', label: 'Partner hours on routine NDAs', detail: 'Routine NDAs are now zero-touch' },
+  { value: '+28%', label: 'Inbound conversion rate', detail: 'Faster response → fewer cold leads' },
+  { value: '14', label: 'Days to ship', detail: 'Diagnosis through production rollout' }
+];
+
+const builtItems = [
+  {
+    n: '01',
+    title: 'A relational source of truth in Supabase.',
+    body:
+      'Leads, conflicts checks, engagements, matter records, and time entries all flow through a single PostgreSQL schema. Clio remains the system of record for active matters; the new schema is the layer that talks to everything else.'
+  },
+  {
+    n: '02',
+    title: 'Make.com workflows for intake routing.',
+    body:
+      'Lead form submissions hit a triage scenario that classifies (matter type, geography, urgency), runs the conflicts check against Clio, and routes to the right partner with a pre-drafted engagement letter ready to review.'
+  },
+  {
+    n: '03',
+    title: 'Claude as an invisible Chief of Staff.',
+    body:
+      'Claude reads the inbound message + the conflicts result + house style guides, and drafts: (a) the partner-to-prospect response, (b) the engagement letter, (c) the matter brief for the assigned associate. Drafts only — sends require human approval until the firm trusts the path.'
+  },
+  {
+    n: '04',
+    title: 'A standup-style review queue.',
+    body:
+      'Every morning the assigned partner sees one screen: drafts awaiting approval, conflicts edge cases, lead scoring outliers. Approve, redline, or reject. The queue replaced a partner Slack channel that had 200 unread messages on day one.'
+  },
+  {
+    n: '05',
+    title: 'Audit trail and evals.',
+    body:
+      'Every Claude run is logged with input, tools called, citations, and output. The firm runs a weekly eval against a held-out set of 40 historical leads to detect regression. Two prompt revisions in week three came directly from the eval results.'
+  }
+];
+
+const learnedItems = [
+  {
+    title: "We underestimated the partner-trust ramp.",
+    body: "We assumed two weeks of shadow mode would be enough before turning on auto-send for routine NDAs. It took four. The right call was the partners' — they wanted to see more samples than we expected. We've baked a longer shadow window into our default scope since."
+  },
+  {
+    title: "House-style training data is messier than firms admit.",
+    body: 'The "house style" turned out to be three different house styles, depending on which senior partner had drafted the most recent template. We resolved it with a working session, but we should have asked for redlines on five real engagement letters in the diagnosis week, not the build phase.'
+  },
+  {
+    title: "Conflicts check edge cases need their own queue.",
+    body: 'About 6% of leads turned up conflicts edge cases that required human judgment. We initially routed those into the same partner queue as drafts; it created noise. Splitting them out into a dedicated conflicts queue with its own SLA was cleaner and is now part of our default architecture.'
+  }
+];
+
+const related = [
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  },
+  {
+    code: 'CS.03',
+    title: 'Field RFIs to office approvals in a single rhythm.',
+    impact: '−41% rework on submittals',
+    sector: 'Construction',
+    href: '/case-studies/field-to-office'
+  }
+];
+---
+<Layout
+  title={`${headline} — Commonwealth AI Partners`}
+  description={lede}
+>
+  <main>
+    {/* ============================================================ */}
+    {/* HERO — outcome as headline                                    */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-36 overflow-hidden border-t border-cobalt-500/30 pt-32 md:pt-44">
+      <div aria-hidden="true" class="absolute top-0 left-0 h-1 w-32 bg-cobalt-500"></div>
+
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6">
+          <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4 flex justify-between max-w-xs">
+            <span>Case Study</span>
+            <span>{code}</span>
+          </div>
+          <div class="col-span-12 md:col-span-9 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            {sector}
+          </div>
+        </div>
+
+        <h1 class="mt-12 md:mt-16 font-display text-display-2xl tracking-tightest text-balance max-w-5xl">
+          {headline}
+        </h1>
+
+        <p class="mt-8 max-w-3xl font-display text-2xl md:text-3xl tracking-tight text-cobalt-400 text-balance">
+          {lede}
+        </p>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* CLIENT AT-A-GLANCE                                            */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-12 md:py-16 border-y border-white/10">
+      <div class="container">
+        <dl class="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/10 border border-white/10">
+          <div class="bg-carbon-900 p-5 sm:p-6 flex flex-col gap-2">
+            <dt class="meta-strip text-cobalt-400">Client</dt>
+            <dd class="text-ash-200 leading-snug text-pretty">{client.name}</dd>
+          </div>
+          <div class="bg-carbon-900 p-5 sm:p-6 flex flex-col gap-2">
+            <dt class="meta-strip text-cobalt-400">Size</dt>
+            <dd class="text-ash-200 leading-snug text-pretty">{client.size}</dd>
+          </div>
+          <div class="bg-carbon-900 p-5 sm:p-6 flex flex-col gap-2">
+            <dt class="meta-strip text-cobalt-400">Scope</dt>
+            <dd class="text-ash-200 leading-snug text-pretty">{client.scope}</dd>
+          </div>
+          <div class="bg-carbon-900 p-5 sm:p-6 flex flex-col gap-2">
+            <dt class="meta-strip text-cobalt-400">Duration</dt>
+            <dd class="text-ash-200 leading-snug text-pretty">{client.duration}</dd>
+          </div>
+          <div class="bg-carbon-900 p-5 sm:p-6 flex flex-col gap-2 col-span-2 md:col-span-1">
+            <dt class="meta-strip text-cobalt-400">Stack</dt>
+            <dd class="text-ash-200 leading-snug text-pretty text-sm">{client.stack}</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* PULL QUOTE                                                    */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6">
+          <div class="col-span-12 md:col-span-1 meta-strip text-cobalt-400 hidden md:block">
+            “
+          </div>
+          <blockquote class="col-span-12 md:col-span-10 md:col-start-2">
+            <p class="font-display text-3xl md:text-5xl tracking-tightest leading-[1.1] text-balance">
+              &ldquo;{pullQuote.body}&rdquo;
+            </p>
+            <footer class="mt-8 meta-strip text-ash-400">
+              {pullQuote.attribution}
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* THE PROBLEM                                                   */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">
+          The Problem
+        </div>
+        <div class="col-span-12 md:col-span-9 space-y-5 text-ash-300 text-base md:text-lg leading-relaxed">
+          <h2 class="font-display text-display-md tracking-tightest text-balance text-white mb-2">
+            Intake was a partner pretending to be a paralegal.
+          </h2>
+          <p class="text-pretty">
+            The firm was profitable. Reputation was strong, referrals were steady, and matter
+            quality was high. The bottleneck was below the work itself.
+          </p>
+          <p class="text-pretty">
+            Inbound leads landed in a shared inbox. A senior attorney triaged them, ran the
+            conflicts check by hand against Clio, drafted a response from memory, and looped
+            in a paralegal to put together the engagement letter. Median time from inbound
+            email to signed engagement was 9.4 days. The firm was losing maybe one in five
+            qualifying leads to a competitor that had responded inside 24 hours.
+          </p>
+          <p class="text-pretty">
+            The partner doing this triage billed at $850/hour. He was spending six to nine
+            hours a week on it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* THE APPROACH                                                  */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+          The Approach
+        </div>
+        <div class="col-span-12 md:col-span-9 space-y-5 text-ash-300 text-base md:text-lg leading-relaxed">
+          <h2 class="font-display text-display-md tracking-tightest text-balance text-white mb-2">
+            Diagnose, then build the smallest thing that closes the gap.
+          </h2>
+          <p class="text-pretty">
+            Two days of working sessions: one with the triage partner, one with the
+            paralegals. We watched five real intakes happen, mapped the decision tree,
+            and identified the four points where AI could replace human transcription
+            without replacing human judgment.
+          </p>
+          <p class="text-pretty">
+            We rejected the obvious "build a chatbot for the website" pitch. Inbound leads
+            arrive over email, not a form. The win was internal: a triage layer that did
+            the prep work behind the scenes so a human could approve in 90 seconds instead
+            of doing the prep work themselves.
+          </p>
+          <p class="text-pretty">
+            Architecture written up in a single document the firm could read in 20 minutes.
+            Fixed fee for the build. Two-week target.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* WHAT WE BUILT                                                 */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-16 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            What We Built
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Five components. <span class="text-ash-500">In production at day fourteen.</span>
+          </h2>
+        </div>
+
+        <ol class="border border-white/10 divide-y divide-white/10">
+          {builtItems.map((b) => (
+            <li class="grid grid-cols-1 md:grid-cols-[5rem_1fr] gap-x-6 gap-y-3 p-6 md:p-8 hover:bg-carbon-800 transition-colors">
+              <div class="meta-strip text-cobalt-400 pt-1">{b.n}</div>
+              <div class="space-y-3">
+                <h3 class="font-display text-xl md:text-2xl tracking-tight leading-[1.15] text-balance">{b.title}</h3>
+                <p class="text-ash-300 leading-relaxed text-pretty max-w-3xl">{b.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* RESULTS                                                       */}
+    {/* ============================================================ */}
+    <section class="relative bg-cobalt-500 text-carbon py-24 md:py-32 overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-16 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip border-t border-carbon/40 pt-4">
+            Results
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Measured against the criteria from week one.
+          </h2>
+        </div>
+
+        <dl class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-carbon/15 border border-carbon/15">
+          {metrics.map((m) => (
+            <div class="bg-cobalt-500 p-6 sm:p-8 flex flex-col gap-3">
+              <dt class="meta-strip">{m.label}</dt>
+              <dd class="font-display text-5xl md:text-6xl tracking-tightest leading-none">{m.value}</dd>
+              <p class="text-carbon/80 text-sm leading-snug text-pretty">{m.detail}</p>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* WHAT WE'D DO DIFFERENTLY                                      */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-3">
+          <div class="meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">
+            Honest Reflection
+          </div>
+          <p class="text-ash-500 text-sm mt-3 leading-relaxed text-pretty">
+            We write this section on every engagement. Few consultancies do.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-span-9">
+          <h2 class="font-display text-display-md tracking-tightest text-balance text-white mb-8">
+            What we&rsquo;d do differently next time.
+          </h2>
+
+          <ol class="space-y-8">
+            {learnedItems.map((l, i) => (
+              <li class="grid grid-cols-1 md:grid-cols-[3rem_1fr] gap-x-6 gap-y-2">
+                <div class="meta-strip text-cobalt-400 pt-1">{`L.0${i + 1}`}</div>
+                <div class="space-y-2">
+                  <h3 class="font-display text-xl md:text-2xl tracking-tight leading-[1.2] text-balance">{l.title}</h3>
+                  <p class="text-ash-300 leading-relaxed text-pretty max-w-3xl">{l.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* RELATED CASE STUDIES                                          */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-16 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            More Receipts
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Two more we&rsquo;ve written up.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {related.map((s) => (
+            <a
+              href={s.href}
+              class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors"
+            >
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">
+                {s.title}
+              </h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="mt-12 flex justify-end">
+          <a
+            href="/case-studies"
+            class="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ash-300 hover:text-white transition-colors"
+          >
+            View all case studies
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FINAL CTA                                                     */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-10 items-end">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4 max-w-xs mb-8">
+            Next Step
+          </div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">
+            Got a workflow you&rsquo;d like written up like this?
+          </h2>
+          <p class="mt-6 max-w-xl text-ash-300 text-base md:text-lg leading-relaxed text-pretty">
+            Send the messy version. We&rsquo;ll spend 30 minutes on a call, sketch the
+            architecture if there&rsquo;s one to sketch, and tell you whether we&rsquo;re
+            the right shop to build it.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-start-9 md:col-span-4">
+          <a
+            href="/#contact"
+            class="group block bg-cobalt-500 text-carbon p-6 sm:p-8 hover:bg-cobalt-600 transition-colors"
+          >
+            <div class="meta-strip mb-4">Systems Audit</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min audit.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

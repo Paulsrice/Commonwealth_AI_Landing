@@ -1,0 +1,439 @@
+---
+// =============================================================================
+// INDUSTRY PAGE TEMPLATE
+// =============================================================================
+// This is the canonical industry detail page. Copy this file when creating
+// other /industries/{slug}.astro pages and edit the content blocks.
+//
+// Industry pages serve a different job than service pages. The visitor here
+// is looking for two signals:
+//   (a) Do you understand my world? — the "Pattern" section
+//   (b) Have you done this for someone like me? — the case study + tooling
+// They are NOT looking for a deep technical breakdown of one capability.
+// Architecture diagrams belong on the service page.
+//
+// Conversion + trust patterns applied here:
+//   1. Hero with industry-specific outcome and code (IND.0X)
+//   2. "The Pattern" — mirror-the-pain content that proves we understand
+//      the operational shape of this industry
+//   3. "What we typically deploy here" — maps to the 4 service capabilities
+//   4. Industry-specific tooling we know inside out
+//   5. 2 case study cards from this industry, with quantified outcomes
+//   6. FAQ scoped to this industry's typical objections
+//   7. Final CTA with risk reversal
+//
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'IND.01';
+const kicker = 'Industries';
+const title = 'Professional Services';
+const tagline = 'Built for the firms whose margins live and die by the work itself.';
+const subhead =
+  'Law firms, accounting practices, agencies, and consultancies running on billable hours, document throughput, and client trust. We architect the systems that protect all three.';
+
+const fitFor = [
+  'Firms with 5–150 professional staff and complex matter / engagement work',
+  'Practices where intake, document review, or billing is held together by senior people',
+  'Operators who are profitable but stuck — the work is good, the throughput is the bottleneck',
+  'Owners who can describe the broken workflow in 30 seconds and want to fix it before it breaks the team'
+];
+
+const patterns = [
+  {
+    title: 'Intake is a relay race with dropped batons.',
+    body:
+      'Lead form to PMs, PMs to attorneys/partners, partners to admin, admin to engagement letter. By the time the client signs, three people have re-entered the same data and one has emailed the wrong version of an NDA.'
+  },
+  {
+    title: 'Senior people are doing junior work.',
+    body:
+      'Partners writing first-draft emails. Senior accountants chasing receipts. Principal consultants formatting deliverables. The hourly cost of the work has nothing to do with the value of the work.'
+  },
+  {
+    title: 'Time capture is a guess.',
+    body:
+      'Most firms reconstruct billable time on Friday from memory. The real number is somewhere between 60% and 100% of what should be billed. Whichever it is, you don&rsquo;t actually know.'
+  },
+  {
+    title: 'The PMS, the email, and the doc store don&rsquo;t talk.',
+    body:
+      'The matter exists in three systems. Updates in one don&rsquo;t propagate. The hour spent looking up the right version of the file is the same hour your competitor used to actually do the work.'
+  }
+];
+
+const deployments = [
+  {
+    code: 'DEP.01',
+    title: 'Enterprise AI Integration',
+    href: '/services/enterprise-ai-integration',
+    body:
+      'Claude wired into your matter records and document store: drafting client communications, summarizing transcripts, redlining contracts to your house style, scoring inbound leads. Drafts go to the human — sends do not.'
+  },
+  {
+    code: 'DEP.02',
+    title: 'Relational Data Architecture',
+    href: '/services/relational-data-architecture',
+    body:
+      'A single source of truth for matters, clients, engagements, time, and billing. Update in one place, reflected everywhere. Reporting that runs on real data instead of a Friday-afternoon export.'
+  },
+  {
+    code: 'DEP.03',
+    title: 'Ecosystem Orchestration',
+    href: '/services/ecosystem-orchestration',
+    body:
+      'Connecting your PMS (Clio, PracticePanther, ClickTime, NetSuite, whatever) to email, calendar, doc store, and accounting. Workflow events flow without a human ferrying them.'
+  },
+  {
+    code: 'DEP.04',
+    title: 'Financial & Operational Automation',
+    href: '/services/financial-operational-automation',
+    body:
+      'Time capture from real activity. Invoices generated on the actual schedule. Trust accounting reconciled automatically. AR follow-ups that go out without a partner having to write the email.'
+  }
+];
+
+const stack = [
+  { label: 'PMS', items: 'Clio, PracticePanther, ClickTime, NetSuite, Karbon' },
+  { label: 'Doc & e-sign', items: 'NetDocuments, iManage, Dropbox Sign, DocuSign' },
+  { label: 'Comms', items: 'Google Workspace, Microsoft 365, Front, Help Scout' },
+  { label: 'Accounting', items: 'QuickBooks, Xero, Bill.com, Stripe' },
+  { label: 'AI core', items: 'Anthropic Claude, OpenAI, Google Gemini' },
+  { label: 'Automation', items: 'Make.com, n8n, Supabase, Airtable' }
+];
+
+const caseStudies = [
+  {
+    code: 'CS.01',
+    title: 'A 12-attorney firm replaced its intake stack in 14 days.',
+    impact: '−62% intake-to-engagement cycle',
+    sector: 'Law',
+    href: '/case-studies/legal-intake'
+  },
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Do you have to throw out our PMS?',
+    a: "No. We architect around your existing PMS — Clio, PracticePanther, ClickTime, NetSuite, whatever you're on — and integrate from there. We've never recommended a PMS migration as the lead move; that's somebody else's grift."
+  },
+  {
+    q: 'How do we handle confidentiality and conflicts?',
+    a: "We work under NDA and conflicts checks before any data touches our hands. AI deployments run inside your accounts under your API keys with zero retention configured at the model vendor. We can sign a BAA where applicable. Your matter data does not leave your tenant."
+  },
+  {
+    q: 'What about ethical walls / matter-level access?',
+    a: "We respect them. The retrieval and tool layer enforces the same access controls as your PMS — if a user can't see the matter in Clio, the AI can't pull it either. We treat ethical walls as a hard constraint, not a checkbox."
+  },
+  {
+    q: 'How long until the partners stop having to micromanage this?',
+    a: "Two to three months for the first deployment, longer if multiple workflows are stacked. By month four most firms have one or two systems running in shadow-or-approve mode that the partner trusts enough to delegate."
+  },
+  {
+    q: 'Will this replace anyone on our team?',
+    a: "Honest answer: occasionally. More often it raises the floor of what your existing team can take on without burning out. We tell you up front which workflows are likely to compress headcount needs so you can plan accordingly. We don't sell hidden RIFs."
+  }
+];
+---
+<Layout
+  title={`${title} — Commonwealth AI Partners`}
+  description={subhead}
+>
+  <main>
+    {/* ============================================================ */}
+    {/* HERO                                                          */}
+    {/* ============================================================ */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="relative container min-h-[80vh] pt-28 md:pt-40 pb-16 grid grid-cols-12 gap-x-4 md:gap-x-6 grid-rows-[auto_1fr_auto]">
+        <div class="col-span-12 md:col-start-5 md:col-span-8 grid grid-cols-2 meta-strip">
+          <span class="border-t border-carbon/40 pt-4">{kicker}</span>
+          <span class="border-t border-carbon/40 pt-4 text-right">{code}</span>
+        </div>
+
+        <div class="col-span-12 md:col-span-10 row-start-2 mt-8 md:mt-12 flex flex-col gap-6 md:gap-8">
+          <h1 class="font-display text-display-xl tracking-tightest text-balance">
+            {title}
+          </h1>
+          <p class="font-display text-2xl md:text-4xl tracking-tight text-carbon/85 max-w-3xl text-balance">
+            {tagline}
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-8 row-start-3 mt-10 md:mt-12 flex flex-col gap-7">
+          <p class="text-lg md:text-xl text-carbon/85 leading-snug max-w-2xl text-balance text-pretty">
+            {subhead}
+          </p>
+          <div class="flex flex-wrap items-center gap-4 md:gap-6">
+            <a
+              href="/#contact"
+              class="group inline-flex items-center justify-between gap-6 h-12 sm:h-14 px-5 sm:px-7 bg-carbon text-white hover:bg-carbon-700 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors"
+            >
+              <span>Book a Systems Audit</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            <span class="meta-strip text-white">30 min &middot; If we&rsquo;re not the right fit, we&rsquo;ll tell you who is.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FIT-FOR STRIP                                                 */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-950 border-y border-cobalt-500/20 py-12 md:py-14">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-6 items-start">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">
+          Fit check
+        </div>
+        <ul class="col-span-12 md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+          {fitFor.map((f) => (
+            <li class="grid grid-cols-[1.25rem_1fr] gap-3 items-start text-ash-200 text-sm md:text-base">
+              <span class="text-cobalt-400 mt-2 inline-block w-2 h-2 bg-current"></span>
+              <span class="text-pretty">{f}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* THE PATTERN                                                   */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">
+            The Pattern
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            We&rsquo;ve seen this stack before.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {patterns.map((p, i) => (
+            <article class="bg-carbon-900 p-8 sm:p-10 flex flex-col gap-5">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{`P.0${i + 1}`}</span>
+                <span class="text-ash-500">Symptom</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.1] text-balance">
+                {p.title}
+              </h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{p.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* WHAT WE TYPICALLY DEPLOY                                      */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            What We Deploy Here
+          </div>
+          <div class="col-span-12 md:col-span-9 flex flex-col gap-3">
+            <h2 class="font-display text-display-lg tracking-tightest text-balance">
+              All four capabilities, mapped to the work.
+            </h2>
+            <p class="text-ash-400 text-base md:text-lg leading-relaxed max-w-2xl text-pretty">
+              You probably need two or three of these on day one. We tell you which on the
+              audit call.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {deployments.map((d) => (
+            <a
+              href={d.href}
+              class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-6 hover:bg-carbon-800 transition-colors"
+            >
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{d.code}</span>
+                <span class="text-ash-500 group-hover:text-cobalt-400 transition-colors">Open file &rarr;</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05]">
+                {d.title}
+              </h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{d.body}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* INDUSTRY STACK                                                */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-4">
+          <div class="meta-strip text-ash-500 border-t border-white/15 pt-4 max-w-xs mb-6">
+            Stack
+          </div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">
+            Tools we know inside out.
+          </h2>
+          <p class="mt-6 text-ash-400 text-base leading-relaxed max-w-md text-pretty">
+            We&rsquo;ve shipped against all of these in production. If yours isn&rsquo;t listed,
+            it doesn&rsquo;t mean we can&rsquo;t — it means we&rsquo;ll be honest about the
+            ramp time on the audit call.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {stack.map((s) => (
+            <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+              <div class="meta-strip text-cobalt-400">{s.label}</div>
+              <p class="font-display text-base md:text-lg tracking-tight leading-snug text-balance">
+                {s.items}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* CASE STUDIES                                                  */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            Receipts
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            What it looked like the last two times.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {caseStudies.map((s) => (
+            <a
+              href={s.href}
+              class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors"
+            >
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">
+                {s.title}
+              </h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FAQ                                                           */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            FAQ
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            What firms ask us before they hire us.
+          </h2>
+        </div>
+
+        <div class="border border-white/10 divide-y divide-white/10">
+          {faqs.map((f, i) => (
+            <details class="group">
+              <summary class="cursor-pointer list-none px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-6 hover:bg-carbon-800 transition-colors">
+                <span class="font-display text-lg md:text-xl tracking-tight pr-4 text-balance">
+                  <span class="meta-strip text-cobalt-400 mr-4 inline-block">{`Q.${String(i + 1).padStart(2, '0')}`}</span>
+                  {f.q}
+                </span>
+                <span aria-hidden="true" class="text-2xl shrink-0 transition-transform group-open:rotate-45 text-cobalt-400">+</span>
+              </summary>
+              <div class="px-6 md:px-8 pb-7 md:pb-8 -mt-2 max-w-3xl text-ash-300 leading-relaxed text-pretty">
+                {f.a}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FINAL CTA                                                     */}
+    {/* ============================================================ */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden border-t border-cobalt-700/30">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="container py-24 md:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip border-t border-carbon/40 pt-4 mb-8 max-w-xs flex justify-between">
+            <span>Next step</span>
+            <span>{code}.99</span>
+          </div>
+          <h2 class="font-display text-display-xl tracking-tightest text-balance">
+            Show us the spreadsheet you&rsquo;re embarrassed about.
+          </h2>
+          <p class="mt-8 max-w-xl text-carbon/85 text-lg md:text-xl leading-snug text-balance">
+            We&rsquo;ll spend 30 minutes with it on the call. If there&rsquo;s a clean
+            architecture in there, we&rsquo;ll sketch it. If we&rsquo;re not the right shop,
+            we&rsquo;ll tell you who is.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-start-9 md:col-span-4 flex flex-col gap-6">
+          <a
+            href="/#contact"
+            class="group block bg-carbon text-white p-6 sm:p-8 hover:bg-carbon-700 transition-colors"
+          >
+            <div class="meta-strip text-cobalt-400 mb-4">Systems Audit</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min audit.</div>
+            <div class="mt-6 meta-strip text-ash-400 flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+
+          <a
+            href="/industries"
+            class="group block border border-carbon/60 p-6 sm:p-8 hover:bg-carbon hover:text-white transition-colors"
+          >
+            <div class="meta-strip mb-4">Other industries</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">See all six.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>Industries</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

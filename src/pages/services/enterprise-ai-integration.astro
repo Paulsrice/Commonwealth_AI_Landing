@@ -1,0 +1,607 @@
+---
+// =============================================================================
+// SERVICE PAGE TEMPLATE
+// =============================================================================
+// This is the canonical service detail page. Copy this file when creating
+// other /services/{slug}.astro pages and edit the content blocks.
+//
+// Conversion + trust patterns intentionally applied here:
+//
+//   1. Hero with specific outcome headline (not "Our AI services")
+//   2. Single primary CTA above the fold + risk reversal subtext
+//   3. Trust strip with named partners (Anthropic, OpenAI, etc.)
+//   4. "Diagnosis" block: mirror the prospect's pain back to them
+//   5. Concrete deliverables list (numbered, specific, not abstract)
+//   6. Process visualized week-by-week (demystifies the engagement)
+//   7. Architecture / how-it-works visual
+//   8. Real metrics in case study cards
+//   9. FAQ that handles real objections, not softballs
+//  10. Engagement model with explicit scope + what's NOT included
+//  11. Final CTA block with second-touch risk reversal
+//
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'DEP.01';
+const kicker = 'What We Deploy';
+const title = 'Enterprise AI Integration';
+const tagline = 'AI deployed as your invisible Chief of Staff.';
+const subhead =
+  "Claude, GPT, and Gemini wired directly into your operational data — parsing the noise, drafting the work, teeing up the decisions. You only have to hit “approve.”";
+
+const partners = [
+  'Anthropic Claude',
+  'OpenAI',
+  'Google Gemini',
+  'MCP',
+  'Agent SDK',
+  'Make.com',
+  'n8n',
+  'Supabase'
+];
+
+const symptoms = [
+  'Your team is hand-summarizing call transcripts, contracts, or tickets nobody else has read.',
+  'Email and Slack drafts get rewritten three times before they go out, by the person whose hour costs the most.',
+  'Inbound requests pile up because triage is a human bottleneck.',
+  'You’ve tried a chatbot. It made things worse.'
+];
+
+const deliverables = [
+  {
+    n: '01',
+    title: 'A model deployment that’s actually yours.',
+    body:
+      'We pick the right model for your workload — Claude for nuance and tool use, GPT for breadth, Gemini for multimodal — and run it inside your account. No re-selling, no markup, no shared keys.'
+  },
+  {
+    n: '02',
+    title: 'Tool use, retrieval, and structured outputs.',
+    body:
+      'The model talks to your CRM, your docs, your ledger. It doesn’t just chat. We design the tool surface, write the schemas, and constrain the outputs so the system never returns an answer you can’t consume programmatically.'
+  },
+  {
+    n: '03',
+    title: 'Retrieval over the docs you already have.',
+    body:
+      'Tickets, contracts, SOPs, transcripts — indexed, embedded, and queried with citation. Hallucinations get logged with the source the model leaned on so you can verify or correct.'
+  },
+  {
+    n: '04',
+    title: 'Human-in-the-loop where it matters.',
+    body:
+      'Drafts, not sends. Recommendations, not decisions. The system writes the email, prepares the contract, scores the lead — and waits for the human to approve. Optional auto-send for low-risk paths once you trust them.'
+  },
+  {
+    n: '05',
+    title: 'Evals, prompt versioning, and observability.',
+    body:
+      'Every prompt is version-controlled. Every run is logged. We ship a small eval harness with the deployment so you can measure quality, catch regressions, and tune over time — not pray.'
+  },
+  {
+    n: '06',
+    title: 'Documentation and a clean handoff.',
+    body:
+      'You get a runbook. A future engineer (or future Claude) can read it and understand what we built and why. The handoff is the deliverable, not an afterthought.'
+  }
+];
+
+const process = [
+  {
+    week: 'Week 0',
+    label: 'Systems Audit',
+    body:
+      'Free 30-minute call. We map the bottleneck and tell you whether AI is the right tool. If it isn’t, we tell you that.'
+  },
+  {
+    week: 'Week 1',
+    label: 'Diagnose',
+    body:
+      'Working sessions with the people doing the work. We watch the workflow, identify decision points, and write down what “good” looks like.'
+  },
+  {
+    week: 'Week 2-3',
+    label: 'Architect',
+    body:
+      'Model selection, tool design, retrieval scope, eval criteria. You get a written architecture you can read in 20 minutes and a fixed-fee build estimate.'
+  },
+  {
+    week: 'Week 3-6',
+    label: 'Build',
+    body:
+      'We stand up the deployment in your accounts. Daily standups, working code at the end of every week, evaluation against the criteria from week one.'
+  },
+  {
+    week: 'Week 6-7',
+    label: 'Tune & Ship',
+    body:
+      'Production rollout in stages: shadow mode, then human-approved, then auto-send for paths that earn it. Documentation lands here.'
+  },
+  {
+    week: 'Ongoing',
+    label: 'Care',
+    body:
+      'Optional retainer for monitoring, evals, and tuning as your data and tools change. Or we hand it off clean and you take it from there.'
+  }
+];
+
+const caseStudies = [
+  {
+    code: 'CS.01',
+    title: 'A 12-attorney firm replaced its intake stack in 14 days.',
+    impact: '−62% intake-to-engagement cycle',
+    sector: 'Professional Services',
+    href: '/case-studies/legal-intake'
+  },
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Are we going to be locked into one model vendor?',
+    a: "No. We architect against the model interface, not the vendor. Switching from Claude to GPT (or running both in parallel for evals) is a config change, not a rebuild. We've migrated production deployments across vendors more than once."
+  },
+  {
+    q: 'How do we know it’s actually accurate?',
+    a: 'We ship an eval harness with the deployment. You define what good looks like in week one (with our help), and we measure every prompt change against it. Production runs are logged with their inputs, outputs, and the documents the model cited — you can audit any decision after the fact.'
+  },
+  {
+    q: 'What about our data? Where does it go?',
+    a: 'Inside your accounts. We deploy under your Anthropic / OpenAI / Google API keys, your Supabase project, your storage. We don’t centralize, broker, or cache your data. If you have a BAA or zero-retention requirement, we set that up at the model-vendor level.'
+  },
+  {
+    q: 'How long until something works?',
+    a: 'Two weeks to a working deployment in shadow mode. Six to seven weeks to production with human-in-the-loop approvals. Faster engagements are possible for narrow scopes; we will tell you on the audit call.'
+  },
+  {
+    q: 'What does this cost?',
+    a: 'A typical Enterprise AI Integration project lands between $25K and $80K depending on scope, with a fixed-fee build after the diagnosis week. Optional retainer afterward starts at $4K/mo. We will quote precisely after the audit.'
+  },
+  {
+    q: 'Can we host the models ourselves?',
+    a: 'For most workloads, no — the frontier closed-source models (Claude, GPT, Gemini) deliver a level of capability that current open-source models can’t match for production use. We can architect for self-hosting if your compliance requires it, but we’ll tell you what you’re trading away.'
+  },
+  {
+    q: 'What if we already have an AI feature that’s not working?',
+    a: 'We do triage engagements. A two-week diagnostic where we audit the existing deployment, write up what’s broken and why, and either fix it or recommend you turn it off. Half-billing applies to the fix engagement if you go forward.'
+  }
+];
+---
+<Layout
+  title={`${title} — Commonwealth AI Partners`}
+  description={subhead}
+>
+  <main>
+    {/* ============================================================ */}
+    {/* HERO                                                          */}
+    {/* ============================================================ */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="relative container min-h-[80vh] pt-28 md:pt-40 pb-16 grid grid-cols-12 gap-x-4 md:gap-x-6 grid-rows-[auto_1fr_auto]">
+        {/* Metadata strip */}
+        <div class="col-span-12 md:col-start-5 md:col-span-8 grid grid-cols-2 meta-strip">
+          <span class="border-t border-carbon/40 pt-4">{kicker}</span>
+          <span class="border-t border-carbon/40 pt-4 text-right">{code}</span>
+        </div>
+
+        {/* Title + tagline */}
+        <div class="col-span-12 md:col-span-10 row-start-2 mt-8 md:mt-12 flex flex-col gap-6 md:gap-8">
+          <h1 class="font-display text-display-xl tracking-tightest text-balance">
+            {title}
+          </h1>
+          <p class="font-display text-2xl md:text-4xl tracking-tight text-carbon/85 max-w-3xl text-balance">
+            {tagline}
+          </p>
+        </div>
+
+        {/* Subhead + CTA */}
+        <div class="col-span-12 md:col-span-8 row-start-3 mt-10 md:mt-12 flex flex-col gap-7">
+          <p class="text-lg md:text-xl text-carbon/85 leading-snug max-w-xl text-balance text-pretty">
+            {subhead}
+          </p>
+          <div class="flex flex-wrap items-center gap-4 md:gap-6">
+            <a
+              href="/#contact"
+              class="group inline-flex items-center justify-between gap-6 h-12 sm:h-14 px-5 sm:px-7 bg-carbon text-white hover:bg-carbon-700 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors"
+            >
+              <span>Book a Systems Audit</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            <span class="meta-strip text-white">30 min &middot; If it&rsquo;s not the right fit, we&rsquo;ll tell you.</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Trust strip — model + tool partners */}
+      <div class="relative bg-carbon-950 border-y border-cobalt-500/20 py-5 md:py-7 overflow-hidden">
+        <div class="container flex flex-wrap items-center gap-x-8 md:gap-x-12 gap-y-4">
+          <span class="meta-strip text-cobalt-400 shrink-0">Stack</span>
+          {partners.map((p) => (
+            <span class="font-display text-lg md:text-xl tracking-tight text-ash-200">{p}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* DIAGNOSIS                                                     */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">
+          Diagnosis
+        </div>
+        <div class="col-span-12 md:col-span-9">
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">
+            You need this if your highest-paid people are doing the dumbest work.
+          </h2>
+        </div>
+
+        <div class="col-span-12 md:col-span-7 md:col-start-4 mt-2 md:mt-4 space-y-5 text-ash-300 text-base md:text-lg leading-relaxed">
+          <p class="text-pretty">
+            AI integration isn&rsquo;t a chatbot, and it isn&rsquo;t a Slackbot. It&rsquo;s a system
+            that reads what your team reads, writes what your team writes, and makes the same
+            judgment calls your team makes &mdash; supervised, logged, and continuously improved.
+          </p>
+          <p class="text-pretty">
+            We get hired when the cost of a bad decision is high enough that you can&rsquo;t
+            blindly automate it, and the volume of decisions is high enough that humans
+            can&rsquo;t keep up. Common signs:
+          </p>
+          <ul class="space-y-3 pt-2">
+            {symptoms.map((s) => (
+              <li class="grid grid-cols-[1.25rem_1fr] gap-3 items-start">
+                <span class="text-cobalt-400 mt-2.5 inline-block w-2 h-2 bg-current"></span>
+                <span class="text-pretty">{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* DELIVERABLES                                                  */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            What you get
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Six concrete deliverables. No vapor.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {deliverables.map((d) => (
+            <article class="bg-carbon-900 p-8 sm:p-10 flex flex-col gap-5">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{d.n}</span>
+                <span class="text-ash-500">Deliverable</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.1] text-balance">
+                {d.title}
+              </h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{d.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* ARCHITECTURE                                                  */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10 overflow-hidden">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-5 flex flex-col gap-6">
+          <div class="meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4 max-w-xs">
+            Architecture
+          </div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance text-cobalt-500">
+            Drafts. Not sends.
+          </h2>
+          <p class="text-ash-300 text-base md:text-lg leading-relaxed text-pretty">
+            Inputs from your real operational surface. A model with constrained tool access
+            and your retrieval index. Outputs that go to a human-approval queue, an auto-send
+            path for trusted flows, or a structured store the rest of the system can read.
+          </p>
+          <p class="text-ash-500 text-sm leading-relaxed text-pretty">
+            Every step logs its inputs, its tools called, its citations, and its outputs.
+            Audit trail is a first-class deliverable.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-7">
+          <svg viewBox="0 0 800 600" class="w-full h-auto text-cobalt-500/85" aria-hidden="true">
+            <g stroke="currentColor" fill="none" stroke-width="1.25" stroke-linecap="square">
+              <rect x="40" y="40" width="720" height="520" />
+              <line x1="40" y1="80" x2="760" y2="80" stroke-dasharray="3 5" opacity="0.55" />
+              <line x1="40" y1="540" x2="760" y2="540" stroke-dasharray="3 5" opacity="0.55" />
+
+              {/* Inputs (left) */}
+              <rect x="80" y="120" width="140" height="50" />
+              <rect x="80" y="200" width="140" height="50" />
+              <rect x="80" y="280" width="140" height="50" />
+              <rect x="80" y="360" width="140" height="50" />
+              <rect x="80" y="440" width="140" height="50" />
+
+              {/* Model core (center) */}
+              <rect x="320" y="180" width="200" height="240" />
+              <line x1="320" y1="230" x2="520" y2="230" />
+              <line x1="320" y1="320" x2="520" y2="320" />
+              <line x1="320" y1="370" x2="520" y2="370" />
+
+              {/* Outputs (right) */}
+              <rect x="600" y="160" width="140" height="50" />
+              <rect x="600" y="240" width="140" height="50" />
+              <rect x="600" y="320" width="140" height="50" />
+              <rect x="600" y="400" width="140" height="50" />
+
+              {/* Connectors */}
+              <path d="M220 145 H270 V200 H320" />
+              <path d="M220 225 H280 V230 H320" />
+              <path d="M220 305 H320" />
+              <path d="M220 385 H280 V370 H320" />
+              <path d="M220 465 H280 V410 H320" />
+
+              <path d="M520 200 H560 V185 H600" />
+              <path d="M520 270 H560 V265 H600" />
+              <path d="M520 350 H560 V345 H600" />
+              <path d="M520 400 H560 V425 H600" />
+            </g>
+
+            <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="currentColor" text-anchor="middle" letter-spacing="0.08em">
+              <text x="150" y="148">EMAIL / TICKETS</text>
+              <text x="150" y="228">CRM / DEALS</text>
+              <text x="150" y="308">DOCS / SOPs</text>
+              <text x="150" y="388">CALL TRANSCRIPTS</text>
+              <text x="150" y="468">LEDGER</text>
+
+              <text x="420" y="220" font-size="11">CLAUDE / GPT / GEMINI</text>
+              <text x="420" y="280" font-size="10">RETRIEVAL</text>
+              <text x="420" y="350" font-size="10">TOOL USE</text>
+              <text x="420" y="400" font-size="10">EVALS + LOGS</text>
+
+              <text x="670" y="188">DRAFT EMAILS</text>
+              <text x="670" y="268">APPROVAL QUEUE</text>
+              <text x="670" y="348">STRUCTURED OUT</text>
+              <text x="670" y="428">AUDIT LOG</text>
+            </g>
+
+            <g stroke="currentColor" stroke-width="1" fill="none" opacity="0.7">
+              <path d="M30 40 H50 M40 30 V50" />
+              <path d="M750 40 H770 M760 30 V50" />
+              <path d="M30 560 H50 M40 550 V570" />
+              <path d="M750 560 H770 M760 550 V570" />
+            </g>
+          </svg>
+
+          <div class="mt-6 border border-cobalt-500/40 grid grid-cols-[auto_1fr] divide-y divide-cobalt-500/20 max-w-md">
+            <div class="row-span-3 p-4 sm:p-5 border-r border-cobalt-500/40 flex items-center justify-center bg-cobalt-500/5">
+              <span class="font-display text-cobalt-500 font-bold text-2xl">{code}</span>
+            </div>
+            <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-0 text-cobalt-200 meta-strip">
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+                <dt class="text-cobalt-400">Title</dt>
+                <dd>AI Integration Reference Architecture</dd>
+              </div>
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+                <dt class="text-cobalt-400">DWG No.</dt>
+                <dd>201.01.00</dd>
+              </div>
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6">
+                <dt class="text-cobalt-400">Scale</dt>
+                <dd>1 / 100</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* PROCESS                                                       */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            Process
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Six weeks, written down. <span class="text-ash-500">No surprises.</span>
+          </h2>
+        </div>
+
+        <ol class="border border-white/10 divide-y divide-white/10">
+          {process.map((p, i) => (
+            <li class="grid grid-cols-1 md:grid-cols-[10rem_1fr_auto] items-start gap-x-6 gap-y-3 p-6 md:p-8 hover:bg-carbon-800 transition-colors">
+              <div class="meta-strip text-cobalt-400 pt-1">{p.week}</div>
+              <div class="space-y-2">
+                <h3 class="font-display text-xl md:text-2xl tracking-tight">{p.label}</h3>
+                <p class="text-ash-300 leading-relaxed text-pretty max-w-2xl">{p.body}</p>
+              </div>
+              <div class="meta-strip text-ash-500 hidden md:block pt-1">{`STEP ${String(i + 1).padStart(2, '0')}`}</div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* RELATED CASE STUDIES                                          */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            Receipts
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Two recent deployments. <span class="text-ash-500">Real numbers.</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {caseStudies.map((s) => (
+            <a
+              href={s.href}
+              class="group bg-carbon p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors"
+            >
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">
+                {s.title}
+              </h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FAQ                                                           */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            FAQ
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            The questions you&rsquo;d ask on a call.
+          </h2>
+        </div>
+
+        <div class="border border-white/10 divide-y divide-white/10">
+          {faqs.map((f, i) => (
+            <details class="group">
+              <summary class="cursor-pointer list-none px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-6 hover:bg-carbon-800 transition-colors">
+                <span class="font-display text-lg md:text-xl tracking-tight pr-4 text-balance">
+                  <span class="meta-strip text-cobalt-400 mr-4 inline-block">{`Q.${String(i + 1).padStart(2, '0')}`}</span>
+                  {f.q}
+                </span>
+                <span aria-hidden="true" class="text-2xl shrink-0 transition-transform group-open:rotate-45 text-cobalt-400">+</span>
+              </summary>
+              <div class="px-6 md:px-8 pb-7 md:pb-8 -mt-2 max-w-3xl text-ash-300 leading-relaxed text-pretty">
+                {f.a}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* ENGAGEMENT MODEL                                              */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-5">
+          <div class="meta-strip text-ash-500 border-t border-white/15 pt-4 max-w-xs mb-6">
+            Engagement
+          </div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">
+            What working with us looks like.
+          </h2>
+        </div>
+
+        <div class="col-span-12 md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Typical scope</div>
+            <div class="font-display text-2xl tracking-tight">$25K &ndash; $80K</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Fixed-fee build after the diagnosis week. No surprise invoices.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Typical timeline</div>
+            <div class="font-display text-2xl tracking-tight">6 &ndash; 7 weeks</div>
+            <p class="text-ash-400 text-sm leading-relaxed">From signed SOW to production rollout. Faster on narrow scopes.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Optional retainer</div>
+            <div class="font-display text-2xl tracking-tight">From $4K&thinsp;/&thinsp;mo</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Monitoring, evals, tuning. Cancel anytime, no clawback.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Not included</div>
+            <div class="font-display text-base leading-snug">Model API costs &middot; net-new SaaS subscriptions &middot; offshore staff aug</div>
+            <p class="text-ash-400 text-sm leading-relaxed">We only spend money you&rsquo;ve approved.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FINAL CTA                                                     */}
+    {/* ============================================================ */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden border-t border-cobalt-700/30">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="container py-24 md:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip border-t border-carbon/40 pt-4 mb-8 max-w-xs flex justify-between">
+            <span>Next step</span>
+            <span>{code}.99</span>
+          </div>
+          <h2 class="font-display text-display-xl tracking-tightest text-balance">
+            Tell us where AI shouldn&rsquo;t be.
+          </h2>
+          <p class="mt-8 max-w-xl text-carbon/85 text-lg md:text-xl leading-snug text-balance">
+            Half the value of an audit is hearing where AI <em>doesn&rsquo;t</em> belong in your
+            stack. We&rsquo;ll do that work in 30 minutes, on the house.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-start-9 md:col-span-4 flex flex-col gap-6">
+          <a
+            href="/#contact"
+            class="group block bg-carbon text-white p-6 sm:p-8 hover:bg-carbon-700 transition-colors"
+          >
+            <div class="meta-strip text-cobalt-400 mb-4">Systems Audit</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min audit.</div>
+            <div class="mt-6 meta-strip text-ash-400 flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+
+          <a
+            href="/#services"
+            class="group block border border-carbon/60 p-6 sm:p-8 hover:bg-carbon hover:text-white transition-colors"
+          >
+            <div class="meta-strip mb-4">More deployments</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">See all four capabilities.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>What We Deploy</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

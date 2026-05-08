@@ -142,13 +142,78 @@ Composed in `src/pages/index.astro`. Section order:
 8. Contact (cobalt, "Stop managing tasks. Start managing systems.")
 
 ### Stubs (using `Stub.astro`)
-All currently render a cobalt mini-hero with kicker, file code, title,
-description, and "Book a Systems Audit" + "← Back to home" CTAs:
+Render a cobalt mini-hero with kicker, file code, title, description,
+and "Book a Systems Audit" + "← Back to home" CTAs:
 
 - `/about`, `/privacy`, `/terms`
-- `/services/`, `/services/{enterprise-ai-integration,relational-data-architecture,ecosystem-orchestration,financial-operational-automation}`
-- `/industries/`, `/industries/{professional-services,real-estate-construction}`
-- `/case-studies/`, `/case-studies/{legal-intake,brokerage-pipeline,field-to-office}`
+- `/services/`, `/services/{relational-data-architecture, ecosystem-orchestration, financial-operational-automation}`
+- `/industries/`, `/industries/{government-civic, home-services, media-marketing, events-conferences, general-operations}`
+- `/case-studies/`, `/case-studies/{brokerage-pipeline, field-to-office}`
+
+### Template pages (full sales-page treatment)
+Three exemplar pages live at real URLs and serve as the canonical
+templates for fleshing out the rest. Copy the matching file when
+building a new full page; edit the content blocks at the top of the
+file. Each is a self-contained Astro page (no shared layout abstraction)
+so the structure is right there in the file.
+
+| Type | Template path | Live route |
+|---|---|---|
+| Service page | `src/pages/services/enterprise-ai-integration.astro` | `/services/enterprise-ai-integration` |
+| Industry page | `src/pages/industries/professional-services.astro` | `/industries/professional-services` |
+| Case study page | `src/pages/case-studies/legal-intake.astro` | `/case-studies/legal-intake` |
+
+**Service page sections** (in order): Hero · Trust strip (partners) ·
+Diagnosis · 6 Deliverables · Architecture diagram · Process by week ·
+Related case studies · FAQ · Engagement model (scope/timeline/retainer
+/not-included) · Final CTA.
+
+**Industry page sections** (in order): Hero · Fit-check strip · The
+Pattern (4 symptom cards) · What We Deploy Here (maps to 4 services) ·
+Industry stack · Case studies · FAQ · Final CTA.
+
+**Case study page sections** (in order): Hero with outcome as headline ·
+Client at-a-glance (industry/size/scope/duration/stack) · Pull quote ·
+Problem · Approach · What We Built (numbered components) · Results
+(quantified metrics block, cobalt) · What We&rsquo;d Do Differently
+(honest reflection) · Related case studies · Final CTA.
+
+### Converting a stub to a full page
+1. Find the stub slug in the relevant `[slug].astro` and remove it from
+   `getStaticPaths` (otherwise Astro will refuse to build with a route
+   collision).
+2. Create a new file at the matching path, e.g.
+   `src/pages/services/relational-data-architecture.astro`.
+3. Open the existing template (`enterprise-ai-integration.astro`),
+   copy it to the new file, and edit the content constants at the top
+   (`code`, `title`, `tagline`, `subhead`, `partners`, `symptoms`,
+   `deliverables`, `process`, `caseStudies`, `faqs`).
+4. Build to verify — `npm run build`.
+
+### Conversion + trust patterns the templates encode
+The three templates intentionally apply the patterns below. When
+extending or replacing them, keep these ideas intact unless you have a
+specific reason to drop one:
+
+- **Outcome as headline**, not feature name. ("AI deployed as your
+  invisible Chief of Staff" beats "Enterprise AI Integration.")
+- **Single primary CTA above the fold** with a risk-reversal subtitle.
+  ("Book a Systems Audit" + "30 min · If we&rsquo;re not the right fit,
+  we&rsquo;ll tell you who is.")
+- **Trust strip with named partners** instead of generic logos.
+  Anthropic, OpenAI, Make.com, n8n, Supabase, Stripe.
+- **Diagnosis section** mirrors the prospect&rsquo;s pain back to them
+  before pitching.
+- **Concrete deliverables** as a numbered list, not abstract benefits.
+- **Process by week** demystifies engagement and reduces purchase fear.
+- **FAQ for real objections** (data privacy, lock-in, accuracy, cost,
+  team impact) — not softballs.
+- **Engagement model with explicit "Not included"** demonstrates
+  honesty.
+- **"What We&rsquo;d Do Differently"** on case studies is the highest
+  trust signal and very few consultancies write it. Don&rsquo;t skip it.
+- **Multiple CTAs** at strategic points (hero, after deliverables, end
+  of FAQ, final block).
 
 ## Conventions
 

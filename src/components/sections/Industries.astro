@@ -14,14 +14,62 @@ const industries = [
   },
   {
     code: 'IND.02',
-    title: 'Real Estate & Construction',
-    href: '/industries/real-estate-construction',
+    title: 'Government & Civic',
+    href: '/industries/government-civic',
     body:
-      'Brokerages, GCs, developers, and property managers running multi-stage projects across spreadsheets, email threads, and a half-installed CRM.',
+      'Agencies, contractors, and civic organizations operating under public-sector procurement, FOIA discipline, and constituent SLA pressure.',
     items: [
-      'Deal pipeline + MLS syndication',
-      'Project status and submittal tracking',
-      'Field-to-office reporting and compliance logs'
+      'Constituent intake and case routing',
+      'FOIA + records request automation',
+      'Compliance, reporting, and audit trails'
+    ]
+  },
+  {
+    code: 'IND.03',
+    title: 'Home Services',
+    href: '/industries/home-services',
+    body:
+      'HVAC, electrical, plumbing, landscaping, pest, cleaning — operators running dispatch, scheduling, invoicing, and follow-up across a dozen tools and a phone.',
+    items: [
+      'Lead capture, qualification, and routing',
+      'Dispatch, scheduling, and crew comms',
+      'Invoicing, reviews, and re-engagement'
+    ]
+  },
+  {
+    code: 'IND.04',
+    title: 'Media & Marketing',
+    href: '/industries/media-marketing',
+    body:
+      'Agencies, studios, and content shops juggling client briefs, asset libraries, ad-account permissions, and reporting cycles that should run themselves.',
+    items: [
+      'Brief intake and creative routing',
+      'Asset libraries and approval flows',
+      'Cross-platform reporting on a schedule'
+    ]
+  },
+  {
+    code: 'IND.05',
+    title: 'Events & Conferences',
+    href: '/industries/events-conferences',
+    body:
+      'Conference producers, festival organizers, and event venues running registration, vendor coordination, scheduling, and post-event reporting on deadline.',
+    items: [
+      'Registration + ticketing integrations',
+      'Speaker, vendor, and run-of-show ops',
+      'Post-event reporting and follow-ups'
+    ]
+  },
+  {
+    code: 'IND.06',
+    title: 'General Operations',
+    href: '/industries/general-operations',
+    body:
+      "When your shape doesn't match a vertical above. Owners and operators with a profitable business and an architecture problem we haven't given a sticker to yet.",
+    items: [
+      'Discovery + diagnostic audit',
+      'Custom architecture and build',
+      'Documentation, handoff, and ongoing care'
     ]
   }
 ];
@@ -33,11 +81,11 @@ const industries = [
         Industries
       </div>
       <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
-        We go deep in two markets. <span class="text-ash-500">For now.</span>
+        Six verticals. <span class="text-ash-500">One architecture problem.</span>
       </h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {industries.map((i) => (
         <a
           href={i.href}

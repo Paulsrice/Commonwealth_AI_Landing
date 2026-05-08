@@ -3,15 +3,8 @@ import Stub from '@/layouts/Stub.astro';
 
 export function getStaticPaths() {
   return [
-    {
-      params: { slug: 'enterprise-ai-integration' },
-      props: {
-        title: 'Enterprise AI Integration',
-        code: 'DEP.01',
-        description:
-          'Claude, GPT, and Gemini deployed as an invisible Chief of Staff. State-of-the-art LLMs wired directly into your operational data — not generic chatbots glued to the surface.'
-      }
-    },
+    // DEP.01 (Enterprise AI Integration) is exempt — dedicated template
+    // page lives at src/pages/services/enterprise-ai-integration.astro
     {
       params: { slug: 'relational-data-architecture' },
       props: {
