@@ -12,6 +12,15 @@ server {
     server_tokens off;
     charset utf-8;
 
+    # Cloud Run terminates TLS upstream and proxies plain HTTP to the container
+    # on $PORT (8080). Without this, nginx's automatic trailing-slash redirect
+    # would emit Location: http://host:8080/path/ — a URL the browser can't
+    # reach (port 8080 isn't publicly exposed) and that downgrades to HTTP.
+    # `absolute_redirect off` makes redirects relative, so the browser keeps
+    # the original scheme and host (https://commonwealthaipartners.com).
+    absolute_redirect off;
+    port_in_redirect off;
+
     # ---- Compression ----
     gzip on;
     gzip_comp_level 5;
