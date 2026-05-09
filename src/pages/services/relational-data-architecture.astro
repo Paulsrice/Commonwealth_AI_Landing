@@ -1,0 +1,596 @@
+---
+// =============================================================================
+// SERVICE PAGE — DEP.02 Relational Data Architecture
+// =============================================================================
+// Built from src/pages/services/enterprise-ai-integration.astro (the template).
+// Source copy: cap-service-relational-data-architecture.md (anti-grifter brief).
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'DEP.02';
+const kicker = 'What We Deploy';
+const title = 'Relational Data Architecture';
+const tagline = 'A single source of truth instead of fragmented spreadsheets.';
+const subhead =
+  'We migrate the chaos — your scattered Sheets, half-installed CRMs, and disconnected vendor portals — into one relational database the rest of the business can read, write, and trust.';
+
+const partners = [
+  'Supabase',
+  'Airtable',
+  'NocoDB',
+  'PostgreSQL',
+  'Make.com',
+  'n8n',
+  'QuickBooks',
+  'Stripe'
+];
+
+const symptoms = [
+  'Three different people on the team will give you three different customer counts in the same week, and all three will be defensible.',
+  'Updating an address means changing it in QuickBooks, the CRM, the Google Sheet, and the email signature template — and somebody always misses one.',
+  'You bought a CRM. Half the team logs in. The other half keeps using the spreadsheet they trust.',
+  'Reporting takes a person and a Sunday. The numbers come out different every time depending on which sheet they pulled from.'
+];
+
+const deliverables = [
+  {
+    n: '01',
+    title: 'A relational schema written down before we build it.',
+    body:
+      'A real entity-relationship diagram. Customers, properties, jobs, invoices, contacts — the nouns of your business — modeled with primary keys, foreign keys, and the rules that govern them. You sign it off in writing before any data moves.'
+  },
+  {
+    n: '02',
+    title: 'A clean migration from your current spreadsheet sprawl.',
+    body:
+      'We extract from Google Sheets, Excel, Smartsheet, QuickBooks, your CRM, your vendor portals — wherever the truth currently lives — dedupe, reconcile, and load it into the new schema. Every row gets a provenance log. You can prove where any record came from.'
+  },
+  {
+    n: '03',
+    title: 'A Supabase, Airtable, or NocoDB instance running in production.',
+    body:
+      'Hosted under your accounts, your card, your domain. We pick the platform based on who has to use it daily — engineers get Supabase, operators get Airtable, regulated environments get self-hosted NocoDB. You inherit working credentials.'
+  },
+  {
+    n: '04',
+    title: 'Read-and-write integrations to the tools you already pay for.',
+    body:
+      'QuickBooks, Stripe, HubSpot, Mailchimp, Beehiiv, ActiveCampaign — wired through Make.com or n8n so the database stays in sync with your operational tools. One update reflects everywhere, instantly.'
+  },
+  {
+    n: '05',
+    title: 'A views layer your team can actually use.',
+    body:
+      'Sales sees a sales view. Ops sees an ops view. Finance sees the books. All reading from the same tables, none of them tripping over each other. Built so a non-technical operator can filter, sort, and report without breaking anything.'
+  },
+  {
+    n: '06',
+    title: 'A documented data dictionary and a runbook for the next person.',
+    body:
+      "Every field defined, every rule explained, every workflow documented. Written for the person who'll be running this two years from now when we're long gone."
+  }
+];
+
+const process = [
+  {
+    week: 'Week 0',
+    label: 'Diagnose',
+    body:
+      'We map every place data currently lives. Spreadsheets, CRMs, vendor portals, that one Notion page. We come back with a single diagram of the current sprawl and the proposed schema.'
+  },
+  {
+    week: 'Week 1',
+    label: 'Model',
+    body:
+      'We design the schema in writing, walk you through the entity relationships, and lock the data model with your team. Nobody touches data until the model is signed off.'
+  },
+  {
+    week: 'Weeks 2–3',
+    label: 'Migrate',
+    body:
+      'We extract from the source systems, reconcile duplicates, load into the new database. Every record carries a provenance log. We hold a reconciliation review with finance and ops at week three.'
+  },
+  {
+    week: 'Week 4',
+    label: 'Wire',
+    body:
+      "We connect the database to your existing tools — QuickBooks, Stripe, the CRM, the email platform — through Make.com or n8n. Two-way sync where it makes sense, one-way where it doesn't."
+  },
+  {
+    week: 'Week 5',
+    label: 'Cut over',
+    body:
+      'We move the team off the old spreadsheets onto the new views. The old sheets stay read-only for 30 days as a safety net. Daily standups during cutover week.'
+  },
+  {
+    week: 'Week 6+',
+    label: 'Care',
+    body:
+      'Optional retainer. We monitor the sync jobs, handle schema changes as the business grows, and onboard new tools as you adopt them. Or we hand over the runbook and disappear.'
+  }
+];
+
+const caseStudies = [
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  },
+  {
+    code: 'CS.03',
+    title: 'Field RFIs to office approvals in a single rhythm.',
+    impact: '−41% rework on submittals',
+    sector: 'Construction',
+    href: '/case-studies/field-to-office'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Do we have to throw out QuickBooks, HubSpot, and the CRM we just paid for?',
+    a: 'No. The database becomes the system of record. The tools you have already paid for stay as the surfaces your team uses. We build two-way sync through Make.com or n8n so a customer record updated in HubSpot reflects in the database in seconds, and an invoice paid in QuickBooks updates the same record. The tools keep working. They just stop disagreeing.'
+  },
+  {
+    q: "How do we know the migration won't lose data or corrupt records?",
+    a: 'Every record migrated carries a provenance log — what source it came from, when, and which dedupe rule applied. We run the migration to a staging environment first, hand finance and ops a reconciliation report, and only cut over once the numbers tie. The old spreadsheets stay read-only for 30 days post-cutover. If something is missing, we can rebuild it from source.'
+  },
+  {
+    q: 'Where does our data live?',
+    a: 'In your accounts, on your domain. Supabase has US and EU regions and we pick whichever your contracts and customers require. Airtable runs on AWS US-East by default and supports HIPAA on the enterprise plan. NocoDB self-hosts wherever you point it — your AWS, your on-prem server, your Hetzner box. None of it routes through us. We can walk a security reviewer through the architecture in 20 minutes.'
+  },
+  {
+    q: 'How long until something works?',
+    a: "Three weeks for the first usable views, six for full cutover. By week three the sales team can log in and see customers correctly. By week six the spreadsheet sprawl is read-only. We don't believe in 18-month 'data transformation' engagements. If the work can't be done in six weeks, we tell you why and either narrow the scope or recommend somebody else."
+  },
+  {
+    q: 'What does this cost?',
+    a: "A typical migration is $25K to $80K fixed-fee depending on how many sources and how dirty the data is. Hosting runs $25 to $300 per month for Supabase, $20 to $54 per user for Airtable team, free to $100 a month for self-hosted NocoDB. The integration scenarios in Make.com or n8n add another $20 to $200 a month. We don't take a cut of any of it."
+  },
+  {
+    q: 'Self-host or cloud?',
+    a: "Default is Supabase or Airtable. Both are managed cloud, both have enterprise security, both are faster for us to ship. We deploy NocoDB self-hosted when regulation requires it, when the legal team has hard data residency rules, or when you have a strong preference for owning the box. Self-hosted is a 1.5x build cost and the ongoing operational burden is yours. We'll tell you which one you actually need."
+  },
+  {
+    q: 'We already started building this in Airtable. Is it salvageable?',
+    a: "Usually yes. About 70% of what we see in client Airtable bases is structurally fine — the schema is right, the relationships are sensible, the team just hit the wall on automation, scale, or reporting. We do a one-week audit, write up what to keep and what to refactor, and quote the rest of the work. If we'd recommend rebuilding from scratch, we'll tell you and explain why. We've talked clients out of rebuilds. It happens."
+  }
+];
+---
+<Layout
+  title={`${title} — Commonwealth AI Partners`}
+  description={subhead}
+>
+  <main>
+    {/* ============================================================ */}
+    {/* HERO                                                          */}
+    {/* ============================================================ */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="relative container min-h-[80vh] pt-28 md:pt-40 pb-16 grid grid-cols-12 gap-x-4 md:gap-x-6 grid-rows-[auto_1fr_auto]">
+        <div class="col-span-12 md:col-start-5 md:col-span-8 grid grid-cols-2 meta-strip">
+          <span class="border-t border-carbon/40 pt-4">{kicker}</span>
+          <span class="border-t border-carbon/40 pt-4 text-right">{code}</span>
+        </div>
+
+        <div class="col-span-12 md:col-span-10 row-start-2 mt-8 md:mt-12 flex flex-col gap-6 md:gap-8">
+          <h1 class="font-display text-display-xl tracking-tightest text-balance">
+            {title}
+          </h1>
+          <p class="font-display text-2xl md:text-4xl tracking-tight text-carbon/85 max-w-3xl text-balance">
+            {tagline}
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-8 row-start-3 mt-10 md:mt-12 flex flex-col gap-7">
+          <p class="text-lg md:text-xl text-carbon/85 leading-snug max-w-xl text-balance text-pretty">
+            {subhead}
+          </p>
+          <div class="flex flex-wrap items-center gap-4 md:gap-6">
+            <a
+              href="/#contact"
+              class="group inline-flex items-center justify-between gap-6 h-12 sm:h-14 px-5 sm:px-7 bg-carbon text-white hover:bg-carbon-700 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors"
+            >
+              <span>Book a Schema Review</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            <span class="meta-strip text-white">30 min &middot; Bring your messiest spreadsheet.</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Trust strip */}
+      <div class="relative bg-carbon-950 border-y border-cobalt-500/20 py-5 md:py-7 overflow-hidden">
+        <div class="container flex flex-wrap items-center gap-x-8 md:gap-x-12 gap-y-4">
+          <span class="meta-strip text-cobalt-400 shrink-0">Stack</span>
+          {partners.map((p) => (
+            <span class="font-display text-lg md:text-xl tracking-tight text-ash-200">{p}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* DIAGNOSIS                                                     */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">
+          Diagnosis
+        </div>
+        <div class="col-span-12 md:col-span-9">
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">
+            You need this if nobody on the team agrees what the customer count is.
+          </h2>
+        </div>
+
+        <div class="col-span-12 md:col-span-7 md:col-start-4 mt-2 md:mt-4 space-y-5 text-ash-300 text-base md:text-lg leading-relaxed">
+          <p class="text-pretty">
+            Relational data architecture means giving your business one database where every
+            entity &mdash; customers, jobs, properties, units, invoices, contacts &mdash; lives
+            once. One row, one ID, one place. Every other tool reads from it or writes to it.
+            We build it on Supabase by default, on Airtable when the team needs a friendly UI
+            yesterday, on NocoDB when self-hosting matters. We do not sell another spreadsheet
+            template.
+          </p>
+          <p class="text-pretty">
+            The clients who hire us for this are usually one big spreadsheet away from a real
+            outage. Six tabs of &ldquo;master lists.&rdquo; A bookkeeper exporting a CSV every
+            Monday. Sales with their own copy in HubSpot. Operations with another in
+            Smartsheet. Nobody has lied &mdash; they have all just been forced to maintain
+            their own reality because nothing else worked. We collapse the realities into one.
+            Common signs:
+          </p>
+          <ul class="space-y-3 pt-2">
+            {symptoms.map((s) => (
+              <li class="grid grid-cols-[1.25rem_1fr] gap-3 items-start">
+                <span class="text-cobalt-400 mt-2.5 inline-block w-2 h-2 bg-current"></span>
+                <span class="text-pretty">{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* DELIVERABLES                                                  */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            What you get
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Six concrete deliverables. No vapor.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {deliverables.map((d) => (
+            <article class="bg-carbon-900 p-8 sm:p-10 flex flex-col gap-5">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{d.n}</span>
+                <span class="text-ash-500">Deliverable</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.1] text-balance">
+                {d.title}
+              </h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{d.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* ARCHITECTURE                                                  */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10 overflow-hidden">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-5 flex flex-col gap-6">
+          <div class="meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4 max-w-xs">
+            Architecture
+          </div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance text-cobalt-500">
+            One source. Many surfaces.
+          </h2>
+          <p class="text-ash-300 text-base md:text-lg leading-relaxed text-pretty">
+            The diagram looks like a hub with spokes. The hub is the relational database.
+            The spokes are every tool the business already uses &mdash; the CRM, the
+            accounting system, the email platform, the dashboards. Each spoke reads from the
+            hub and writes back. The hub is the truth. The spokes are convenient surfaces.
+          </p>
+          <p class="text-ash-500 text-sm leading-relaxed text-pretty">
+            Schema integrity is the deliverable, not an afterthought. Types, foreign keys,
+            and validation rules enforced at the database level &mdash; not in a spreadsheet
+            formula a colleague can overwrite. If a record is broken, you find out at write
+            time, not at month-end close.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-7">
+          <svg viewBox="0 0 800 600" class="w-full h-auto text-cobalt-500/85" aria-hidden="true">
+            <g stroke="currentColor" fill="none" stroke-width="1.25" stroke-linecap="square">
+              <rect x="40" y="40" width="720" height="520" />
+              <line x1="40" y1="80" x2="760" y2="80" stroke-dasharray="3 5" opacity="0.55" />
+              <line x1="40" y1="540" x2="760" y2="540" stroke-dasharray="3 5" opacity="0.55" />
+
+              <rect x="80" y="120" width="140" height="50" />
+              <rect x="80" y="200" width="140" height="50" />
+              <rect x="80" y="280" width="140" height="50" />
+              <rect x="80" y="360" width="140" height="50" />
+              <rect x="80" y="440" width="140" height="50" />
+
+              <rect x="320" y="180" width="200" height="240" />
+              <line x1="320" y1="230" x2="520" y2="230" />
+              <line x1="320" y1="320" x2="520" y2="320" />
+              <line x1="320" y1="370" x2="520" y2="370" />
+
+              <rect x="600" y="160" width="140" height="50" />
+              <rect x="600" y="240" width="140" height="50" />
+              <rect x="600" y="320" width="140" height="50" />
+              <rect x="600" y="400" width="140" height="50" />
+
+              <path d="M220 145 H270 V200 H320" />
+              <path d="M220 225 H280 V230 H320" />
+              <path d="M220 305 H320" />
+              <path d="M220 385 H280 V370 H320" />
+              <path d="M220 465 H280 V410 H320" />
+
+              <path d="M520 200 H560 V185 H600" />
+              <path d="M520 270 H560 V265 H600" />
+              <path d="M520 350 H560 V345 H600" />
+              <path d="M520 400 H560 V425 H600" />
+            </g>
+
+            <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="currentColor" text-anchor="middle" letter-spacing="0.08em">
+              <text x="150" y="148">SHEETS / EXCEL</text>
+              <text x="150" y="228">CRM</text>
+              <text x="150" y="308">QUICKBOOKS / STRIPE</text>
+              <text x="150" y="388">VENDOR PORTALS</text>
+              <text x="150" y="468">FORMS / EMAIL</text>
+
+              <text x="420" y="220" font-size="11">SUPABASE / AIRTABLE</text>
+              <text x="420" y="280" font-size="10">SCHEMA + KEYS</text>
+              <text x="420" y="350" font-size="10">TWO-WAY SYNC</text>
+              <text x="420" y="400" font-size="10">PROVENANCE LOG</text>
+
+              <text x="670" y="188">SALES VIEW</text>
+              <text x="670" y="268">OPS VIEW</text>
+              <text x="670" y="348">FINANCE VIEW</text>
+              <text x="670" y="428">REPORTS</text>
+            </g>
+
+            <g stroke="currentColor" stroke-width="1" fill="none" opacity="0.7">
+              <path d="M30 40 H50 M40 30 V50" />
+              <path d="M750 40 H770 M760 30 V50" />
+              <path d="M30 560 H50 M40 550 V570" />
+              <path d="M750 560 H770 M760 550 V570" />
+            </g>
+          </svg>
+
+          <div class="mt-6 border border-cobalt-500/40 grid grid-cols-[auto_1fr] divide-y divide-cobalt-500/20 max-w-md">
+            <div class="row-span-3 p-4 sm:p-5 border-r border-cobalt-500/40 flex items-center justify-center bg-cobalt-500/5">
+              <span class="font-display text-cobalt-500 font-bold text-2xl">{code}</span>
+            </div>
+            <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-0 text-cobalt-200 meta-strip">
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+                <dt class="text-cobalt-400">Title</dt>
+                <dd>Hub-and-Spoke Schema</dd>
+              </div>
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+                <dt class="text-cobalt-400">DWG No.</dt>
+                <dd>202.01.00</dd>
+              </div>
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6">
+                <dt class="text-cobalt-400">Scale</dt>
+                <dd>1 / 100</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* PROCESS                                                       */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            Process
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Six weeks, written down. <span class="text-ash-500">No surprises.</span>
+          </h2>
+        </div>
+
+        <ol class="border border-white/10 divide-y divide-white/10">
+          {process.map((p, i) => (
+            <li class="grid grid-cols-1 md:grid-cols-[10rem_1fr_auto] items-start gap-x-6 gap-y-3 p-6 md:p-8 hover:bg-carbon-800 transition-colors">
+              <div class="meta-strip text-cobalt-400 pt-1">{p.week}</div>
+              <div class="space-y-2">
+                <h3 class="font-display text-xl md:text-2xl tracking-tight">{p.label}</h3>
+                <p class="text-ash-300 leading-relaxed text-pretty max-w-2xl">{p.body}</p>
+              </div>
+              <div class="meta-strip text-ash-500 hidden md:block pt-1">{`STEP ${String(i + 1).padStart(2, '0')}`}</div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* RELATED CASE STUDIES                                          */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            Receipts
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Two recent migrations. <span class="text-ash-500">Real numbers.</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {caseStudies.map((s) => (
+            <a
+              href={s.href}
+              class="group bg-carbon p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors"
+            >
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">
+                {s.title}
+              </h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FAQ                                                           */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">
+            FAQ
+          </div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            The questions you&rsquo;d ask on a call.
+          </h2>
+        </div>
+
+        <div class="border border-white/10 divide-y divide-white/10">
+          {faqs.map((f, i) => (
+            <details class="group">
+              <summary class="cursor-pointer list-none px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-6 hover:bg-carbon-800 transition-colors">
+                <span class="font-display text-lg md:text-xl tracking-tight pr-4 text-balance">
+                  <span class="meta-strip text-cobalt-400 mr-4 inline-block">{`Q.${String(i + 1).padStart(2, '0')}`}</span>
+                  {f.q}
+                </span>
+                <span aria-hidden="true" class="text-2xl shrink-0 transition-transform group-open:rotate-45 text-cobalt-400">+</span>
+              </summary>
+              <div class="px-6 md:px-8 pb-7 md:pb-8 -mt-2 max-w-3xl text-ash-300 leading-relaxed text-pretty">
+                {f.a}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* ENGAGEMENT MODEL                                              */}
+    {/* ============================================================ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-5">
+          <div class="meta-strip text-ash-500 border-t border-white/15 pt-4 max-w-xs mb-6">
+            Engagement
+          </div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">
+            What working with us looks like.
+          </h2>
+        </div>
+
+        <div class="col-span-12 md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Typical scope</div>
+            <div class="font-display text-2xl tracking-tight">$25K &ndash; $80K</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Fixed-fee migration after the diagnosis week. Five to twelve source systems merged into one schema.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Typical timeline</div>
+            <div class="font-display text-2xl tracking-tight">6 weeks</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Schema in week one, cutover by week six. We don&rsquo;t do 18-month transformation engagements.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Optional retainer</div>
+            <div class="font-display text-2xl tracking-tight">From $3K&thinsp;/&thinsp;mo</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Sync monitoring, schema changes, onboarding new tools as you adopt them.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Not included</div>
+            <div class="font-display text-base leading-snug">Hosting fees &middot; CRM seat costs &middot; ETL of legacy ERPs over 50 GB</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Big-ERP migrations are a different animal. We&rsquo;ll refer you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ */}
+    {/* FINAL CTA                                                     */}
+    {/* ============================================================ */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden border-t border-cobalt-700/30">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="container py-24 md:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip border-t border-carbon/40 pt-4 mb-8 max-w-xs flex justify-between">
+            <span>Next step</span>
+            <span>{code}.99</span>
+          </div>
+          <h2 class="font-display text-display-xl tracking-tightest text-balance">
+            Show us the spreadsheet you&rsquo;re embarrassed about.
+          </h2>
+          <p class="mt-8 max-w-xl text-carbon/85 text-lg md:text-xl leading-snug text-balance">
+            Bring your messiest source of truth &mdash; the one with the merged cells, the
+            color-coded rules nobody documented, the tab named &ldquo;old don&rsquo;t
+            use.&rdquo; We&rsquo;ll tell you what it would take to give the business one
+            database instead of twelve.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-start-9 md:col-span-4 flex flex-col gap-6">
+          <a
+            href="/#contact"
+            class="group block bg-carbon text-white p-6 sm:p-8 hover:bg-carbon-700 transition-colors"
+          >
+            <div class="meta-strip text-cobalt-400 mb-4">Schema Review</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min review.</div>
+            <div class="mt-6 meta-strip text-ash-400 flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+
+          <a
+            href="/#services"
+            class="group block border border-carbon/60 p-6 sm:p-8 hover:bg-carbon hover:text-white transition-colors"
+          >
+            <div class="meta-strip mb-4">More deployments</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">See all four capabilities.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>What We Deploy</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

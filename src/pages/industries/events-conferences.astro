@@ -1,0 +1,324 @@
+---
+// =============================================================================
+// INDUSTRY PAGE — IND.05 Events & Conferences
+// =============================================================================
+// Built from src/pages/industries/professional-services.astro (the template).
+// Source copy: cap-industry-events-conferences.md.
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'IND.05';
+const kicker = 'Industries';
+const title = 'Events & Conferences';
+const tagline = 'For show runners whose busy season has its own gravity.';
+const subhead =
+  'Independent conferences, festivals, association meetings, and trade shows. We build the connective tissue between registration, sponsorship, content production, on-site logistics, and post-event follow-up — so the team that runs the show stops re-keying it.';
+
+const fitFor = [
+  'A team of 4 to 40 producing 1 to 20 shows a year, with at least one full-time event director and a registration platform that doesn’t talk to anything else',
+  'Workflows hop between registration, CRM, sponsorship CRM, ticketing, mobile app, content scheduling, and accounting — each owned by a different vendor and a different person',
+  'Profitable in season but stuck — revenue is real, off-season ops are skeleton, and the same fires happen at the same week every year',
+  "The director can describe the broken workflow in 30 seconds and has paid for an 'all-in-one' platform that solved the registration third of it"
+];
+
+const patterns = [
+  {
+    title: 'Registration is a CSV exported once a week.',
+    body:
+      "Cvent, Bizzabo, RegFox, or Eventbrite holds the registration list. The CRM holds the relationships. The badge printer holds the badge file. The mobile app holds the agenda. Every Friday somebody exports four CSVs and calls them the truth. By Monday they've drifted again."
+  },
+  {
+    title: 'Sponsorship deliverables are an Excel file and goodwill.',
+    body:
+      'What every sponsor was promised — booth size, logo placements, dedicated email mentions, social posts, podium time — lives in a spreadsheet that grew tabs over time. Fulfillment happens by tribal memory. Renewals are negotiated against a partial picture. Revenue per sponsor per year is a guess.'
+  },
+  {
+    title: 'Senior people are doing junior work.',
+    body:
+      'The event director hand-edits the agenda PDF for the third time. The producer reformats speaker bios for the website, the program, and the app — three formats, one source, four typos. The owner reconciles ticket revenue against accounting because nobody else can.'
+  },
+  {
+    title: 'Post-event is a black hole.',
+    body:
+      "The show ends. The follow-up emails go out a week late. The session recordings get edited eventually. The lead lists get to sponsors three weeks after the moment of intent. Two-thirds of the next year's renewals are decided in the seven days nobody had bandwidth for."
+  }
+];
+
+const deployments = [
+  {
+    code: 'DEP.01',
+    title: 'Enterprise AI Integration',
+    href: '/services/enterprise-ai-integration',
+    body:
+      'Claude wired into session abstracts, speaker bios, and registration data: drafting program copy, summarizing session recordings into shareable clips, classifying inbound speaker pitches against your CFP rubric, drafting personalized post-event follow-ups by attendee track. Drafts go to the producer — sends do not.'
+  },
+  {
+    code: 'DEP.02',
+    title: 'Relational Data Architecture',
+    href: '/services/relational-data-architecture',
+    body:
+      'One database where attendees, sponsors, speakers, sessions, deliverables, and invoices live once. Cvent, Bizzabo, the CRM, the badging system, the mobile app, and accounting read from and write to it. The sponsor deliverable spreadsheet becomes a tracked, visible object instead of a quarterly panic.'
+  },
+  {
+    code: 'DEP.03',
+    title: 'Ecosystem Orchestration',
+    href: '/services/ecosystem-orchestration',
+    body:
+      'Make.com or n8n routing the show: registration to CRM to mobile app to badge printer to lead-retrieval; sponsor sale to deliverable tracker to fulfillment dashboard; speaker accept to bio to website to program to app. Every leg logged. Every breakage caught before show week.'
+  },
+  {
+    code: 'DEP.04',
+    title: 'Financial & Operational Automation',
+    href: '/services/financial-operational-automation',
+    body:
+      'Sponsor invoicing automated against contract terms. Refund and chargeback flows reconciled to ticketing and accounting. Sponsorship deliverable status reflected in dashboards the sales team can pull during renewals. Revenue per sponsor, per year, per show — a real number, not a story.'
+  }
+];
+
+const stack = [
+  { label: 'Registration', items: 'Cvent, Bizzabo, RegFox, Eventbrite, Swoogo' },
+  { label: 'Mobile & app', items: 'Whova, Brella, Sched, Bizzabo, custom' },
+  { label: 'Badging & lead', items: 'onArrival, Validar, Captello, iCapture' },
+  { label: 'Sponsorship & CRM', items: 'HubSpot, Salesforce, Affinity, Airtable' },
+  { label: 'AI core', items: 'Anthropic Claude, OpenAI, Google Gemini' },
+  { label: 'Automation', items: 'Make.com, n8n, Supabase, Airtable' }
+];
+
+const caseStudies = [
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  },
+  {
+    code: 'CS.03',
+    title: 'Field RFIs to office approvals in a single rhythm.',
+    impact: '−41% rework on submittals',
+    sector: 'Construction',
+    href: '/case-studies/field-to-office'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Do we have to throw out Cvent, Bizzabo, or our registration platform?',
+    a: "No. The registration platform stays. We've shipped against Cvent, Bizzabo, RegFox, Eventbrite, and Swoogo. What we typically replace isn't the platform — it's the CSV-export workflow that stitches the platform to the rest of your stack. The platform keeps doing what it's good at. The wiring around it stops being a person."
+  },
+  {
+    q: 'What about attendee data privacy and GDPR?',
+    a: 'Attendee data stays in your platforms under your contracts. Where data flows between systems, it routes through Make.com or n8n with logging your privacy team can audit. Where models touch attendee data — drafting personalized follow-ups, classifying pitches — we use enterprise terms with no-training agreements. We honor opt-outs as a first-class concept in the data model, not an afterthought.'
+  },
+  {
+    q: 'How does this work with our seasonal cadence?',
+    a: "Most engagements are timed to the off-season for the show that's getting the rebuild. We typically diagnose during your busiest month (so we see the actual fires), architect the week after the show, and ship before the next major event timeline. Retainers flex up around show weeks and down in the off-season — we'd rather scale to the work than charge for a flat seat."
+  },
+  {
+    q: 'How long until we stop fighting the same week-of fires every year?',
+    a: "The first show after deployment is the proof. The week-of fires that get fixed by week six of the build — bad badge data, sponsor deliverables falling through, speaker bio mismatches, post-event follow-up delay — don't recur. The first show with the new wiring is where we measure against the previous year's same show. We've never had a client miss a year-over-year improvement target on the metrics we agreed to."
+  },
+  {
+    q: 'Will this replace anyone on our team?',
+    a: "No. The hours we delete are the ones nobody enjoys — CSV reconciliation at midnight, sponsorship deliverable spreadsheet entry, post-event follow-up that nobody had bandwidth for. Most event clients have re-deployed people to sponsorship sales, content programming, and attendee experience — work that grows revenue. If you want a hidden headcount cut, we're the wrong vendor."
+  }
+];
+---
+<Layout
+  title={`${title} — Commonwealth AI Partners`}
+  description={subhead}
+>
+  <main>
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div class="relative container min-h-[80vh] pt-28 md:pt-40 pb-16 grid grid-cols-12 gap-x-4 md:gap-x-6 grid-rows-[auto_1fr_auto]">
+        <div class="col-span-12 md:col-start-5 md:col-span-8 grid grid-cols-2 meta-strip">
+          <span class="border-t border-carbon/40 pt-4">{kicker}</span>
+          <span class="border-t border-carbon/40 pt-4 text-right">{code}</span>
+        </div>
+        <div class="col-span-12 md:col-span-10 row-start-2 mt-8 md:mt-12 flex flex-col gap-6 md:gap-8">
+          <h1 class="font-display text-display-xl tracking-tightest text-balance">{title}</h1>
+          <p class="font-display text-2xl md:text-4xl tracking-tight text-carbon/85 max-w-3xl text-balance">{tagline}</p>
+        </div>
+        <div class="col-span-12 md:col-span-8 row-start-3 mt-10 md:mt-12 flex flex-col gap-7">
+          <p class="text-lg md:text-xl text-carbon/85 leading-snug max-w-2xl text-balance text-pretty">{subhead}</p>
+          <div class="flex flex-wrap items-center gap-4 md:gap-6">
+            <a href="/#contact" class="group inline-flex items-center justify-between gap-6 h-12 sm:h-14 px-5 sm:px-7 bg-carbon text-white hover:bg-carbon-700 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors">
+              <span>Book an Off-season Call</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            <span class="meta-strip text-white">30 min &middot; If we&rsquo;re not the right fit, we&rsquo;ll tell you who is.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon-950 border-y border-cobalt-500/20 py-12 md:py-14">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-6 items-start">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">Fit check</div>
+        <ul class="col-span-12 md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+          {fitFor.map((f) => (
+            <li class="grid grid-cols-[1.25rem_1fr] gap-3 items-start text-ash-200 text-sm md:text-base">
+              <span class="text-cobalt-400 mt-2 inline-block w-2 h-2 bg-current"></span>
+              <span class="text-pretty">{f}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">The Pattern</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">We&rsquo;ve seen this stack before.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {patterns.map((p, i) => (
+            <article class="bg-carbon-900 p-8 sm:p-10 flex flex-col gap-5">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{`P.0${i + 1}`}</span>
+                <span class="text-ash-500">Symptom</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.1] text-balance">{p.title}</h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{p.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">What We Deploy Here</div>
+          <div class="col-span-12 md:col-span-9 flex flex-col gap-3">
+            <h2 class="font-display text-display-lg tracking-tightest text-balance">All four capabilities, mapped to the work.</h2>
+            <p class="text-ash-400 text-base md:text-lg leading-relaxed max-w-2xl text-pretty">You probably need two or three of these on day one. We tell you which on the audit call.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {deployments.map((d) => (
+            <a href={d.href} class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-6 hover:bg-carbon-800 transition-colors">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{d.code}</span>
+                <span class="text-ash-500 group-hover:text-cobalt-400 transition-colors">Open file &rarr;</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05]">{d.title}</h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{d.body}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-4">
+          <div class="meta-strip text-ash-500 border-t border-white/15 pt-4 max-w-xs mb-6">Stack</div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">Tools we know inside out.</h2>
+          <p class="mt-6 text-ash-400 text-base leading-relaxed max-w-md text-pretty">We&rsquo;ve shipped against all of these in production. If yours isn&rsquo;t listed, we&rsquo;ll be honest about ramp time on the audit call.</p>
+        </div>
+        <div class="col-span-12 md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {stack.map((s) => (
+            <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+              <div class="meta-strip text-cobalt-400">{s.label}</div>
+              <p class="font-display text-base md:text-lg tracking-tight leading-snug text-balance">{s.items}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">Receipts</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">What it looked like the last two times.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {caseStudies.map((s) => (
+            <a href={s.href} class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">{s.title}</h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">FAQ</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">What show runners ask us before they hire us.</h2>
+        </div>
+        <div class="border border-white/10 divide-y divide-white/10">
+          {faqs.map((f, i) => (
+            <details class="group">
+              <summary class="cursor-pointer list-none px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-6 hover:bg-carbon-800 transition-colors">
+                <span class="font-display text-lg md:text-xl tracking-tight pr-4 text-balance">
+                  <span class="meta-strip text-cobalt-400 mr-4 inline-block">{`Q.${String(i + 1).padStart(2, '0')}`}</span>
+                  {f.q}
+                </span>
+                <span aria-hidden="true" class="text-2xl shrink-0 transition-transform group-open:rotate-45 text-cobalt-400">+</span>
+              </summary>
+              <div class="px-6 md:px-8 pb-7 md:pb-8 -mt-2 max-w-3xl text-ash-300 leading-relaxed text-pretty">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden border-t border-cobalt-700/30">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div class="container py-24 md:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip border-t border-carbon/40 pt-4 mb-8 max-w-xs flex justify-between">
+            <span>Next step</span>
+            <span>{code}.99</span>
+          </div>
+          <h2 class="font-display text-display-xl tracking-tightest text-balance">Tell us about your worst show week.</h2>
+          <p class="mt-8 max-w-xl text-carbon/85 text-lg md:text-xl leading-snug text-balance">
+            The badge data that was wrong on Monday morning. The sponsor whose logo
+            wasn&rsquo;t on the screen. The follow-up that went out two weeks late.
+            We&rsquo;ll tell you what we&rsquo;d build first so the next one is boring.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-start-9 md:col-span-4 flex flex-col gap-6">
+          <a href="/#contact" class="group block bg-carbon text-white p-6 sm:p-8 hover:bg-carbon-700 transition-colors">
+            <div class="meta-strip text-cobalt-400 mb-4">Off-season call</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min call.</div>
+            <div class="mt-6 meta-strip text-ash-400 flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+          <a href="/industries" class="group block border border-carbon/60 p-6 sm:p-8 hover:bg-carbon hover:text-white transition-colors">
+            <div class="meta-strip mb-4">Other industries</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">See all six.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>Industries</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

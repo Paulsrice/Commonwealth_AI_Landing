@@ -1,38 +1,15 @@
 ---
 import Stub from '@/layouts/Stub.astro';
 
+// All four DEP services now have dedicated pages:
+//   DEP.01 → src/pages/services/enterprise-ai-integration.astro
+//   DEP.02 → src/pages/services/relational-data-architecture.astro
+//   DEP.03 → src/pages/services/ecosystem-orchestration.astro
+//   DEP.04 → src/pages/services/financial-operational-automation.astro
+// This dynamic route is kept as a safety net for any new services that get
+// scaffolded as stubs before getting a full page.
 export function getStaticPaths() {
-  return [
-    // DEP.01 (Enterprise AI Integration) is exempt — dedicated template
-    // page lives at src/pages/services/enterprise-ai-integration.astro
-    {
-      params: { slug: 'relational-data-architecture' },
-      props: {
-        title: 'Relational Data Architecture',
-        code: 'DEP.02',
-        description:
-          'A single source of truth instead of fragmented spreadsheets and copy-paste chaos. We migrate scattered tabs into unified relational databases on Supabase, PostgreSQL, or Airtable.'
-      }
-    },
-    {
-      params: { slug: 'ecosystem-orchestration' },
-      props: {
-        title: 'Ecosystem Orchestration',
-        code: 'DEP.03',
-        description:
-          'Conditional routing across the tools you already pay for. We orchestrate the conversation between systems so the human middleman stops being the bottleneck.'
-      }
-    },
-    {
-      params: { slug: 'financial-operational-automation' },
-      props: {
-        title: 'Financial & Operational Automation',
-        code: 'DEP.04',
-        description:
-          'Revenue and operations stay perfectly synced. Stripe ledger integrations, automated onboarding, dispatch sequences — invoices and payouts reconcile themselves while you focus on the work.'
-      }
-    }
-  ];
+  return [];
 }
 
 const { title, code, description } = Astro.props;

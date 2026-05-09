@@ -1,0 +1,330 @@
+---
+// =============================================================================
+// INDUSTRY PAGE — IND.06 General Operations
+// =============================================================================
+// Built from src/pages/industries/professional-services.astro (the template).
+// Source copy: cap-industry-general-operations.md.
+// Catch-all page for operationally complex businesses that don't slot neatly
+// into the named industries.
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'IND.06';
+const kicker = 'Industries';
+const title = 'General Operations';
+const tagline = "For operators whose business doesn't fit a vertical brochure.";
+const subhead =
+  'Multi-unit retail. Light manufacturing and distribution. Real estate portfolios. Holding companies running three different entities under one team. We work with operationally complex businesses whose problem isn’t industry, it’s architecture.';
+
+const fitFor = [
+  '5 to 200 staff with at least one operationally complex layer — multiple locations, multiple entities, multiple property assets, or multiple product lines',
+  'Workflows touch a stack that grew organically over time and includes one or two software platforms nobody on the market has heard of',
+  'Profitable but stuck — the business outgrew its original ops design and the next hire isn’t going to fix it',
+  "The owner can describe the broken workflow in 30 seconds and is sick of being told 'your business is too unique' by software vendors"
+];
+
+const patterns = [
+  {
+    title: 'Multi-entity is a folder structure.',
+    body:
+      "Three LLCs. Five properties. Two product lines. The 'system' for keeping them straight is a Google Drive folder hierarchy, a chart of accounts that grew tabs every year, and the founder's memory. New hires need a verbal walkthrough. Reports require a CFO who's been there long enough to know which entity owns what."
+  },
+  {
+    title: 'Senior people are doing junior work.',
+    body:
+      "The COO reconciles between entities. The owner reformats financial statements for the bank. The bookkeeper hand-allocates expenses across three sets of books because the accounting platform doesn't support it cleanly. Everyone is doing two jobs. One of them is plumbing."
+  },
+  {
+    title: "The metrics don't tie.",
+    body:
+      'Sales by location, by product, by entity, by month — exist somewhere, in three reports, with three answers. Reconciliation is a person. Operational dashboards are a screenshot in a Slack channel. The business is profitable but the picture is blurry.'
+  },
+  {
+    title: 'The tools were bought one fire at a time.',
+    body:
+      'A POS system because the old one died. A field app because the techs needed something. An inventory tool because Excel finally broke. None of them were chosen as a stack. They were chosen as a patch. Now they don’t talk and the bridge is a person.'
+  }
+];
+
+const deployments = [
+  {
+    code: 'DEP.01',
+    title: 'Enterprise AI Integration',
+    href: '/services/enterprise-ai-integration',
+    body:
+      'Claude wired into your operational records, vendor communications, and internal documents: classifying inbound work, drafting communications across multiple entities in their respective voices, summarizing operational reports into entity-specific exec briefs, surfacing patterns across locations or product lines that no human had bandwidth to notice.'
+  },
+  {
+    code: 'DEP.02',
+    title: 'Relational Data Architecture',
+    href: '/services/relational-data-architecture',
+    body:
+      'One database where customers, vendors, locations, entities, products, properties, and transactions live once — with the entity, location, and category dimensions modeled at the row level so every report can be cut by them. Multi-LLC, multi-location, multi-entity reporting becomes a query, not a Saturday.'
+  },
+  {
+    code: 'DEP.03',
+    title: 'Ecosystem Orchestration',
+    href: '/services/ecosystem-orchestration',
+    body:
+      'Make.com or n8n routing work across the patchwork: POS to inventory to accounting; field app to dispatch to billing; vendor portal to AP to entity allocation. Every leg logged. The bridge between systems stops being a person who can’t take a vacation.'
+  },
+  {
+    code: 'DEP.04',
+    title: 'Financial & Operational Automation',
+    href: '/services/financial-operational-automation',
+    body:
+      'Multi-entity accounting allocation rules written down and run automatically. Inter-company transactions reconciled. Per-entity, per-location, and per-product profitability rolled up to one consolidated dashboard. The CFO who used to spend two days a month consolidating gets two days back.'
+  }
+];
+
+const stack = [
+  { label: 'ERP & accounting', items: 'QuickBooks Online, Xero, Sage Intacct, NetSuite (limited)' },
+  { label: 'POS & retail', items: 'Square, Lightspeed, Toast, Shopify POS' },
+  { label: 'Property & PM', items: 'AppFolio, Buildium, Yardi (read-only), Stessa' },
+  { label: 'Inventory & ops', items: 'Cin7, Katana, Sortly, Airtable' },
+  { label: 'AI core', items: 'Anthropic Claude, OpenAI, Google Gemini' },
+  { label: 'Automation', items: 'Make.com, n8n, Supabase, Airtable, NocoDB' }
+];
+
+const caseStudies = [
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  },
+  {
+    code: 'CS.03',
+    title: 'Field RFIs to office approvals in a single rhythm.',
+    impact: '−41% rework on submittals',
+    sector: 'Construction',
+    href: '/case-studies/field-to-office'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Our business is unusual. Does this still work?',
+    a: "Probably yes, and we'll tell you in writing if it doesn't. Most 'unusual' businesses we meet are just operationally complex — multi-entity, multi-location, multi-product — running on a stack that grew one fire at a time. The architecture is what's missing, not the industry expertise. We've shipped against multi-LLC holding companies, mixed-vertical owner-operator portfolios, and businesses where the founder is the system. If we genuinely don't have the chops for your stack, we'll say so on the call and refer you to someone who does."
+  },
+  {
+    q: 'Do we have to throw out the patchwork we already built?',
+    a: "No. The patchwork is information about how the business actually works. We do a one-week diagnostic, draw the current stack on one page, and tell you which pieces to keep, which to wire together, and which to retire. We've talked clients out of rebuilds. We've also told clients that the patchwork is genuinely beyond saving and recommended a clean architecture instead. Either answer comes in writing with a number attached."
+  },
+  {
+    q: 'Where does our data live?',
+    a: 'In your accounts, your databases, your domains. Default is Supabase or Airtable hosted in the region your contracts require. Self-hosted NocoDB when residency rules or strong preference call for it. Make.com or n8n cloud for orchestration; n8n self-hosted when you need it. Nothing routes through us. We can walk a security reviewer through the architecture in 20 minutes.'
+  },
+  {
+    q: 'How long until something works?',
+    a: 'Three weeks for first relief, six to eight for full deployment depending on how patchworked the current stack is. The three-week mark is where the highest-pain workflow starts running with new wiring. Full cutover is six to eight weeks. If we can’t ship inside two months, we owe you a written explanation and probably a smaller scope.'
+  },
+  {
+    q: 'Will this replace anyone on our team?',
+    a: "No, and we won't pretend otherwise. The hours we delete are the ones nobody chose to do — multi-entity reconciliation, hand-allocating expenses, copy-pasting between three platforms, formatting reports for the bank. Most clients re-deploy people to revenue-side work or finally hire the role they've been putting off. If you want a hidden headcount cut, we're the wrong vendor."
+  }
+];
+---
+<Layout
+  title={`${title} — Commonwealth AI Partners`}
+  description={subhead}
+>
+  <main>
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div class="relative container min-h-[80vh] pt-28 md:pt-40 pb-16 grid grid-cols-12 gap-x-4 md:gap-x-6 grid-rows-[auto_1fr_auto]">
+        <div class="col-span-12 md:col-start-5 md:col-span-8 grid grid-cols-2 meta-strip">
+          <span class="border-t border-carbon/40 pt-4">{kicker}</span>
+          <span class="border-t border-carbon/40 pt-4 text-right">{code}</span>
+        </div>
+        <div class="col-span-12 md:col-span-10 row-start-2 mt-8 md:mt-12 flex flex-col gap-6 md:gap-8">
+          <h1 class="font-display text-display-xl tracking-tightest text-balance">{title}</h1>
+          <p class="font-display text-2xl md:text-4xl tracking-tight text-carbon/85 max-w-3xl text-balance">{tagline}</p>
+        </div>
+        <div class="col-span-12 md:col-span-8 row-start-3 mt-10 md:mt-12 flex flex-col gap-7">
+          <p class="text-lg md:text-xl text-carbon/85 leading-snug max-w-2xl text-balance text-pretty">{subhead}</p>
+          <div class="flex flex-wrap items-center gap-4 md:gap-6">
+            <a href="/#contact" class="group inline-flex items-center justify-between gap-6 h-12 sm:h-14 px-5 sm:px-7 bg-carbon text-white hover:bg-carbon-700 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors">
+              <span>Book a Stack Walkthrough</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            <span class="meta-strip text-white">30 min &middot; If we&rsquo;re not the right fit, we&rsquo;ll tell you who is.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon-950 border-y border-cobalt-500/20 py-12 md:py-14">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-6 items-start">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">Fit check</div>
+        <ul class="col-span-12 md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+          {fitFor.map((f) => (
+            <li class="grid grid-cols-[1.25rem_1fr] gap-3 items-start text-ash-200 text-sm md:text-base">
+              <span class="text-cobalt-400 mt-2 inline-block w-2 h-2 bg-current"></span>
+              <span class="text-pretty">{f}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">The Pattern</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">We&rsquo;ve seen this stack before.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {patterns.map((p, i) => (
+            <article class="bg-carbon-900 p-8 sm:p-10 flex flex-col gap-5">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{`P.0${i + 1}`}</span>
+                <span class="text-ash-500">Symptom</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.1] text-balance">{p.title}</h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{p.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">What We Deploy Here</div>
+          <div class="col-span-12 md:col-span-9 flex flex-col gap-3">
+            <h2 class="font-display text-display-lg tracking-tightest text-balance">All four capabilities, mapped to the work.</h2>
+            <p class="text-ash-400 text-base md:text-lg leading-relaxed max-w-2xl text-pretty">You probably need two or three of these on day one. We tell you which on the audit call.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {deployments.map((d) => (
+            <a href={d.href} class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-6 hover:bg-carbon-800 transition-colors">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{d.code}</span>
+                <span class="text-ash-500 group-hover:text-cobalt-400 transition-colors">Open file &rarr;</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05]">{d.title}</h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{d.body}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-4">
+          <div class="meta-strip text-ash-500 border-t border-white/15 pt-4 max-w-xs mb-6">Stack</div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">A non-exhaustive list.</h2>
+          <p class="mt-6 text-ash-400 text-base leading-relaxed max-w-md text-pretty">
+            Where we don&rsquo;t already know your platform, we ramp in 1 to 3 weeks and quote
+            that ramp honestly. We&rsquo;ve never told a prospect their stack was too weird
+            to work with.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {stack.map((s) => (
+            <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+              <div class="meta-strip text-cobalt-400">{s.label}</div>
+              <p class="font-display text-base md:text-lg tracking-tight leading-snug text-balance">{s.items}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">Receipts</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">What it looked like the last two times.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {caseStudies.map((s) => (
+            <a href={s.href} class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">{s.title}</h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">FAQ</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">What operators ask us before they hire us.</h2>
+        </div>
+        <div class="border border-white/10 divide-y divide-white/10">
+          {faqs.map((f, i) => (
+            <details class="group">
+              <summary class="cursor-pointer list-none px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-6 hover:bg-carbon-800 transition-colors">
+                <span class="font-display text-lg md:text-xl tracking-tight pr-4 text-balance">
+                  <span class="meta-strip text-cobalt-400 mr-4 inline-block">{`Q.${String(i + 1).padStart(2, '0')}`}</span>
+                  {f.q}
+                </span>
+                <span aria-hidden="true" class="text-2xl shrink-0 transition-transform group-open:rotate-45 text-cobalt-400">+</span>
+              </summary>
+              <div class="px-6 md:px-8 pb-7 md:pb-8 -mt-2 max-w-3xl text-ash-300 leading-relaxed text-pretty">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden border-t border-cobalt-700/30">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div class="container py-24 md:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip border-t border-carbon/40 pt-4 mb-8 max-w-xs flex justify-between">
+            <span>Next step</span>
+            <span>{code}.99</span>
+          </div>
+          <h2 class="font-display text-display-xl tracking-tightest text-balance">Tell us how your business actually works.</h2>
+          <p class="mt-8 max-w-xl text-carbon/85 text-lg md:text-xl leading-snug text-balance">
+            The three LLCs, the five locations, the two product lines that share an inventory
+            but don&rsquo;t share a P&amp;L. We&rsquo;ll draw your current architecture on
+            one page and tell you what we&rsquo;d build first.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-start-9 md:col-span-4 flex flex-col gap-6">
+          <a href="/#contact" class="group block bg-carbon text-white p-6 sm:p-8 hover:bg-carbon-700 transition-colors">
+            <div class="meta-strip text-cobalt-400 mb-4">Stack walkthrough</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min call.</div>
+            <div class="mt-6 meta-strip text-ash-400 flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+          <a href="/industries" class="group block border border-carbon/60 p-6 sm:p-8 hover:bg-carbon hover:text-white transition-colors">
+            <div class="meta-strip mb-4">Other industries</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">See all six.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>Industries</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,56 +1,17 @@
 ---
 import Stub from '@/layouts/Stub.astro';
 
+// All six IND industries now have dedicated pages:
+//   IND.01 → src/pages/industries/professional-services.astro
+//   IND.02 → src/pages/industries/government-civic.astro
+//   IND.03 → src/pages/industries/home-services.astro
+//   IND.04 → src/pages/industries/media-marketing.astro
+//   IND.05 → src/pages/industries/events-conferences.astro
+//   IND.06 → src/pages/industries/general-operations.astro
+// This dynamic route is kept as a safety net for any new industries that get
+// scaffolded as stubs before getting a full page.
 export function getStaticPaths() {
-  return [
-    // IND.01 (Professional Services) is exempt — it has its own dedicated
-    // template page at src/pages/industries/professional-services.astro
-    {
-      params: { slug: 'government-civic' },
-      props: {
-        title: 'Government & Civic',
-        code: 'IND.02',
-        description:
-          'Local government, agencies, civic organizations, and contractors operating under public-sector procurement, FOIA discipline, and constituent SLA pressure.'
-      }
-    },
-    {
-      params: { slug: 'home-services' },
-      props: {
-        title: 'Home Services',
-        code: 'IND.03',
-        description:
-          'HVAC, electrical, plumbing, landscaping, pest, cleaning — operators running dispatch, scheduling, invoicing, and customer follow-up across a dozen tools and a phone.'
-      }
-    },
-    {
-      params: { slug: 'media-marketing' },
-      props: {
-        title: 'Media & Marketing',
-        code: 'IND.04',
-        description:
-          'Agencies, studios, and content shops juggling client briefs, asset libraries, ad-account permissions, and reporting cycles that should be running themselves.'
-      }
-    },
-    {
-      params: { slug: 'events-conferences' },
-      props: {
-        title: 'Events & Conferences',
-        code: 'IND.05',
-        description:
-          'Conference producers, festival organizers, and event venues running registration, vendor coordination, scheduling, and post-event reporting on a deadline that doesn’t move.'
-      }
-    },
-    {
-      params: { slug: 'general-operations' },
-      props: {
-        title: 'General Operations',
-        code: 'IND.06',
-        description:
-          'When your shape doesn’t match a vertical above. Owners and operators with a profitable business and an architecture problem we haven’t given a sticker to yet.'
-      }
-    }
-  ];
+  return [];
 }
 
 const { title, code, description } = Astro.props;

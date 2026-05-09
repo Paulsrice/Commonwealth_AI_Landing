@@ -1,0 +1,540 @@
+---
+// =============================================================================
+// SERVICE PAGE — DEP.04 Financial & Operational Automation
+// =============================================================================
+// Built from src/pages/services/enterprise-ai-integration.astro (the template).
+// Source copy: cap-service-financial-operational-automation.md.
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'DEP.04';
+const kicker = 'What We Deploy';
+const title = 'Financial & Operational Automation';
+const tagline = 'Books that close themselves. Almost.';
+const subhead =
+  'We automate the workflows that keep your money straight — invoicing, collections, reconciliation, expense capture, ops reporting — so finance closes faster, gets cleaner numbers, and stops chasing the same thing every month.';
+
+const partners = [
+  'QuickBooks',
+  'Stripe',
+  'Xero',
+  'Plaid',
+  'Make.com',
+  'n8n',
+  'Supabase',
+  'Anthropic Claude'
+];
+
+const symptoms = [
+  "The monthly close lands a week or two later than it should because somebody is chasing receipts, vendor bills, or one specific client's PO.",
+  "Past-due invoices wait until somebody remembers to send the reminder. Some get sent. Some don't.",
+  "Stripe and QuickBooks disagree on what's been collected, and reconciling them is a Friday afternoon ritual.",
+  'Operational metrics — utilization, hours by job, revenue by source — live in spreadsheets that get updated when finance has time.'
+];
+
+const deliverables = [
+  {
+    n: '01',
+    title: 'An automated invoicing pipeline.',
+    body:
+      'Triggered by your CRM stage, your project tracker, or your scheduling tool — invoices generated in QuickBooks or Stripe with the right line items, the right tax codes, and the right contact. Drafts route to finance for one-click approval. Nothing autosends.'
+  },
+  {
+    n: '02',
+    title: "A collections runner that doesn't forget.",
+    body:
+      'Past-due invoices escalate on a written cadence — reminder at day 3, second notice at day 14, escalation to the account owner at day 30, and so on. Customizable per customer. Drafts go to a human. Sends are explicit.'
+  },
+  {
+    n: '03',
+    title: 'Stripe-to-QuickBooks reconciliation, automated.',
+    body:
+      'Every Stripe charge, refund, dispute, and payout matched to the corresponding invoice and journal entry. Exceptions land in a queue with a human-readable explanation. We close the gap that took a person every Friday.'
+  },
+  {
+    n: '04',
+    title: 'An expense and vendor bill capture flow.',
+    body:
+      'Inbound vendor bills auto-coded against your chart of accounts, attached to the right vendor record, and queued for approval. Receipts photographed in the field tagged to the right job. We do not write back to the GL without an explicit approval click.'
+  },
+  {
+    n: '05',
+    title: 'An operational dashboard finance can trust.',
+    body:
+      'Hours by job, utilization, revenue by source, AR aging, gross margin by line — pulled from your operational systems and your accounting system into one view. Refreshes every hour. Same numbers everybody else is looking at.'
+  },
+  {
+    n: '06',
+    title: 'A close-day checklist that runs itself.',
+    body:
+      'A scripted sequence that pulls the bank statement, runs the reconciliation, flags variances, generates the close packet, and emails it to whoever signs off. Close goes from a week to a day. Often less.'
+  }
+];
+
+const process = [
+  {
+    week: 'Week 0',
+    label: 'Diagnose',
+    body:
+      'We shadow finance through a full close cycle. We log every manual step, every reconciliation, every chase. We come back with a single page that names the bottlenecks and the proposed automation order.'
+  },
+  {
+    week: 'Week 1',
+    label: 'Architect',
+    body:
+      'We pick the priority workflows, design the staging schema, and agree on approval points with finance and the controller. Sign-off before any system gets touched.'
+  },
+  {
+    week: 'Weeks 2–3',
+    label: 'Build invoicing & reconciliation',
+    body:
+      'Highest-impact, lowest-risk first. Invoices and Stripe reconciliation typically come online here. Internal evals run on backfilled data.'
+  },
+  {
+    week: 'Week 4',
+    label: 'Build collections & expense capture',
+    body:
+      'Cadence rules written into the system, vendor coding rules trained and reviewed. Drafts route to finance. Nothing sends without approval.'
+  },
+  {
+    week: 'Week 5',
+    label: 'Shadow mode',
+    body:
+      'All flows run against live data but produce drafts only. Finance approves manually for one full week. We compare to what they would have done.'
+  },
+  {
+    week: 'Week 6',
+    label: 'Cut over',
+    body:
+      "Approval thresholds get raised based on the shadow week's accuracy. Daily standups during cutover. Close-day checklist gets run together for the first time."
+  },
+  {
+    week: 'Week 7+',
+    label: 'Care',
+    body:
+      'Optional retainer. We monitor the reconciliation queue, tune the collections cadence, add new workflows as the business grows. Or we hand over the runbook and disappear.'
+  }
+];
+
+const caseStudies = [
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  },
+  {
+    code: 'CS.03',
+    title: 'Field RFIs to office approvals in a single rhythm.',
+    impact: '−41% rework on submittals',
+    sector: 'Construction',
+    href: '/case-studies/field-to-office'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Are you going to break our books?',
+    a: "No. We don't write to the general ledger without an explicit approval click from finance. Every workflow runs in shadow mode for a week before it goes live, producing drafts that get compared to what your team would have done. Every write is reversible and logged with the user, the timestamp, and the source. Your CPA and your auditor can trace any entry back to its source. We've never broken a client's books. We've fixed a few."
+  },
+  {
+    q: 'Will this replace our bookkeeper or our fractional CFO?',
+    a: "No, and we'll say no on the call if you ask hopefully. The work this eliminates is the part of the job that nobody enjoyed — chasing receipts, re-keying vendor bills, reconciling Stripe to QuickBooks line by line. Your bookkeeper gets to do the actual accounting. Your CFO gets numbers a week earlier. We've had clients re-deploy a bookkeeper to revenue analysis because there was finally time. We've never had one ask us to write a layoff plan."
+  },
+  {
+    q: 'Where does our financial data go?',
+    a: 'It stays in your accounts. QuickBooks, Stripe, Xero — all under your contracts and your security model. The staging layer runs in your Supabase, in the region you specify. Nothing routes through us. Nothing gets sent to a model vendor without an explicit data processing agreement and your written approval. We can walk a CPA, an auditor, or a SOC 2 reviewer through the data flow on a single page.'
+  },
+  {
+    q: 'How long until something works?',
+    a: "Three weeks for the first close acceleration, six for the full pipeline. The three-week mark is where invoicing and Stripe reconciliation typically come online — that alone shaves a day or two off close for most clients. Full cutover with collections, expense capture, and the close-day checklist is week six or seven. We don't run 12-month 'finance transformation' programs. If the work needs more than that, the scope is wrong."
+  },
+  {
+    q: 'What does this cost?',
+    a: "A typical engagement is $30K to $90K fixed-fee for the build, depending on how many workflows and how unusual the chart of accounts is. SaaS costs are yours and rarely move much — Make.com or n8n at $20 to $200 a month, Supabase at $25, your existing QuickBooks and Stripe plans untouched. We don't take a percentage of revenue, of AR, or of recovered cash. We charge for the build and for the optional retainer. Nothing else."
+  },
+  {
+    q: 'Self-host or cloud?',
+    a: "Default is cloud — Stripe, QuickBooks Online, Make.com cloud, Supabase cloud. The faster, cheaper, better-monitored option for almost every operator under $50M. We self-host (n8n, Supabase, Postgres) when regulated data or contractual residency rules require it. Self-hosted is a 1.5x build cost and the ops burden moves to your team. We'll tell you which one you actually need."
+  },
+  {
+    q: "We've got QuickBooks Desktop. Are we stuck?",
+    a: "Mostly, yes. The QuickBooks Desktop API is fragile and the integration ecosystem around it is shrinking every year. We can automate the workflows that flow into Desktop — Stripe reconciliation, invoicing, expense capture — through a staging layer, but we'll usually recommend a migration to QuickBooks Online or Xero in the same engagement. The migration adds 2 to 4 weeks. Most clients save the cost back in the first close."
+  }
+];
+---
+<Layout
+  title={`${title} — Commonwealth AI Partners`}
+  description={subhead}
+>
+  <main>
+    {/* HERO */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="relative container min-h-[80vh] pt-28 md:pt-40 pb-16 grid grid-cols-12 gap-x-4 md:gap-x-6 grid-rows-[auto_1fr_auto]">
+        <div class="col-span-12 md:col-start-5 md:col-span-8 grid grid-cols-2 meta-strip">
+          <span class="border-t border-carbon/40 pt-4">{kicker}</span>
+          <span class="border-t border-carbon/40 pt-4 text-right">{code}</span>
+        </div>
+
+        <div class="col-span-12 md:col-span-10 row-start-2 mt-8 md:mt-12 flex flex-col gap-6 md:gap-8">
+          <h1 class="font-display text-display-xl tracking-tightest text-balance">{title}</h1>
+          <p class="font-display text-2xl md:text-4xl tracking-tight text-carbon/85 max-w-3xl text-balance">{tagline}</p>
+        </div>
+
+        <div class="col-span-12 md:col-span-8 row-start-3 mt-10 md:mt-12 flex flex-col gap-7">
+          <p class="text-lg md:text-xl text-carbon/85 leading-snug max-w-2xl text-balance text-pretty">{subhead}</p>
+          <div class="flex flex-wrap items-center gap-4 md:gap-6">
+            <a href="/#contact" class="group inline-flex items-center justify-between gap-6 h-12 sm:h-14 px-5 sm:px-7 bg-carbon text-white hover:bg-carbon-700 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors">
+              <span>Book a Close Review</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            <span class="meta-strip text-white">30 min &middot; We&rsquo;ll skip the demo. Bring last month&rsquo;s close.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative bg-carbon-950 border-y border-cobalt-500/20 py-5 md:py-7 overflow-hidden">
+        <div class="container flex flex-wrap items-center gap-x-8 md:gap-x-12 gap-y-4">
+          <span class="meta-strip text-cobalt-400 shrink-0">Stack</span>
+          {partners.map((p) => (
+            <span class="font-display text-lg md:text-xl tracking-tight text-ash-200">{p}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* DIAGNOSIS */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">Diagnosis</div>
+        <div class="col-span-12 md:col-span-9">
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">
+            You need this if your bookkeeper is the most load-bearing person you can&rsquo;t replace.
+          </h2>
+        </div>
+
+        <div class="col-span-12 md:col-span-7 md:col-start-4 mt-2 md:mt-4 space-y-5 text-ash-300 text-base md:text-lg leading-relaxed">
+          <p class="text-pretty">
+            Financial and operational automation is the layer between your accounting system
+            and the rest of the business. Stripe charges that find their invoice. Vendor bills
+            that get coded and routed. Past-due invoices that escalate without somebody
+            remembering to send them. Ops metrics that show up in finance&rsquo;s reporting
+            without a copy-paste. We deploy this on QuickBooks, Stripe, Make.com, and the
+            email platform you already use.
+          </p>
+          <p class="text-pretty">
+            Our clients here are usually founder-led companies between $2M and $50M revenue.
+            The bookkeeper is heroic. The CFO is part-time or fractional. Close takes a week
+            longer than it should because three workflows are still manual and one of them is
+            chasing a single client every month. We do not replace the bookkeeper. We delete
+            the parts of the job that shouldn&rsquo;t have been theirs in the first place.
+            Common signs:
+          </p>
+          <ul class="space-y-3 pt-2">
+            {symptoms.map((s) => (
+              <li class="grid grid-cols-[1.25rem_1fr] gap-3 items-start">
+                <span class="text-cobalt-400 mt-2.5 inline-block w-2 h-2 bg-current"></span>
+                <span class="text-pretty">{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {/* DELIVERABLES */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">What you get</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Six concrete deliverables. No vapor.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {deliverables.map((d) => (
+            <article class="bg-carbon-900 p-8 sm:p-10 flex flex-col gap-5">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{d.n}</span>
+                <span class="text-ash-500">Deliverable</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.1] text-balance">{d.title}</h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{d.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ARCHITECTURE */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10 overflow-hidden">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-5 flex flex-col gap-6">
+          <div class="meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4 max-w-xs">Architecture</div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance text-cobalt-500">One ledger. Many feeders.</h2>
+          <p class="text-ash-300 text-base md:text-lg leading-relaxed text-pretty">
+            The accounting system at the center &mdash; QuickBooks for most of our clients,
+            Xero for a few &mdash; with a row of feeder workflows: Stripe, the CRM, the
+            scheduling tool, the bill-capture inbox, the expense app. Each feeder lands data
+            in a staging table in Supabase. A reconciliation step matches it against existing
+            records and queues anything ambiguous for human review.
+          </p>
+          <p class="text-ash-500 text-sm leading-relaxed text-pretty">
+            Reversibility is the deliverable. Every write to QuickBooks is preceded by a
+            draft in Supabase that finance approves. Every write is logged. Anything we touch
+            can be unwound, traced, and explained.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-7">
+          <svg viewBox="0 0 800 600" class="w-full h-auto text-cobalt-500/85" aria-hidden="true">
+            <g stroke="currentColor" fill="none" stroke-width="1.25" stroke-linecap="square">
+              <rect x="40" y="40" width="720" height="520" />
+              <line x1="40" y1="80" x2="760" y2="80" stroke-dasharray="3 5" opacity="0.55" />
+              <line x1="40" y1="540" x2="760" y2="540" stroke-dasharray="3 5" opacity="0.55" />
+
+              <rect x="80" y="120" width="140" height="50" />
+              <rect x="80" y="200" width="140" height="50" />
+              <rect x="80" y="280" width="140" height="50" />
+              <rect x="80" y="360" width="140" height="50" />
+              <rect x="80" y="440" width="140" height="50" />
+
+              <rect x="320" y="180" width="200" height="240" />
+              <line x1="320" y1="230" x2="520" y2="230" />
+              <line x1="320" y1="320" x2="520" y2="320" />
+              <line x1="320" y1="370" x2="520" y2="370" />
+
+              <rect x="600" y="160" width="140" height="50" />
+              <rect x="600" y="240" width="140" height="50" />
+              <rect x="600" y="320" width="140" height="50" />
+              <rect x="600" y="400" width="140" height="50" />
+
+              <path d="M220 145 H270 V200 H320" />
+              <path d="M220 225 H280 V230 H320" />
+              <path d="M220 305 H320" />
+              <path d="M220 385 H280 V370 H320" />
+              <path d="M220 465 H280 V410 H320" />
+
+              <path d="M520 200 H560 V185 H600" />
+              <path d="M520 270 H560 V265 H600" />
+              <path d="M520 350 H560 V345 H600" />
+              <path d="M520 400 H560 V425 H600" />
+            </g>
+
+            <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="currentColor" text-anchor="middle" letter-spacing="0.08em">
+              <text x="150" y="148">STRIPE</text>
+              <text x="150" y="228">CRM / DEALS</text>
+              <text x="150" y="308">SCHEDULING</text>
+              <text x="150" y="388">BILL INBOX</text>
+              <text x="150" y="468">EXPENSES</text>
+
+              <text x="420" y="220" font-size="11">SUPABASE STAGING</text>
+              <text x="420" y="280" font-size="10">RECONCILE</text>
+              <text x="420" y="350" font-size="10">DRAFTS &rarr; APPROVE</text>
+              <text x="420" y="400" font-size="10">QUICKBOOKS / XERO</text>
+
+              <text x="670" y="188">AR DASHBOARD</text>
+              <text x="670" y="268">COLLECTIONS QUEUE</text>
+              <text x="670" y="348">CLOSE PACKET</text>
+              <text x="670" y="428">AUDIT LOG</text>
+            </g>
+
+            <g stroke="currentColor" stroke-width="1" fill="none" opacity="0.7">
+              <path d="M30 40 H50 M40 30 V50" />
+              <path d="M750 40 H770 M760 30 V50" />
+              <path d="M30 560 H50 M40 550 V570" />
+              <path d="M750 560 H770 M760 550 V570" />
+            </g>
+          </svg>
+
+          <div class="mt-6 border border-cobalt-500/40 grid grid-cols-[auto_1fr] divide-y divide-cobalt-500/20 max-w-md">
+            <div class="row-span-3 p-4 sm:p-5 border-r border-cobalt-500/40 flex items-center justify-center bg-cobalt-500/5">
+              <span class="font-display text-cobalt-500 font-bold text-2xl">{code}</span>
+            </div>
+            <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-0 text-cobalt-200 meta-strip">
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+                <dt class="text-cobalt-400">Title</dt>
+                <dd>One-Ledger Reference Architecture</dd>
+              </div>
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6 border-b border-cobalt-500/20">
+                <dt class="text-cobalt-400">DWG No.</dt>
+                <dd>204.01.00</dd>
+              </div>
+              <div class="col-span-2 p-4 sm:p-5 grid grid-cols-[auto_1fr] gap-x-6">
+                <dt class="text-cobalt-400">Scale</dt>
+                <dd>1 / 100</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* PROCESS */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">Process</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Seven weeks, written down. <span class="text-ash-500">No surprises.</span>
+          </h2>
+        </div>
+
+        <ol class="border border-white/10 divide-y divide-white/10">
+          {process.map((p, i) => (
+            <li class="grid grid-cols-1 md:grid-cols-[10rem_1fr_auto] items-start gap-x-6 gap-y-3 p-6 md:p-8 hover:bg-carbon-800 transition-colors">
+              <div class="meta-strip text-cobalt-400 pt-1">{p.week}</div>
+              <div class="space-y-2">
+                <h3 class="font-display text-xl md:text-2xl tracking-tight">{p.label}</h3>
+                <p class="text-ash-300 leading-relaxed text-pretty max-w-2xl">{p.body}</p>
+              </div>
+              <div class="meta-strip text-ash-500 hidden md:block pt-1">{`STEP ${String(i + 1).padStart(2, '0')}`}</div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    {/* CASE STUDIES */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">Receipts</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            Two recent finance ops. <span class="text-ash-500">Real numbers.</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {caseStudies.map((s) => (
+            <a href={s.href} class="group bg-carbon p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">{s.title}</h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* FAQ */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">FAQ</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            The questions you&rsquo;d ask on a call.
+          </h2>
+        </div>
+
+        <div class="border border-white/10 divide-y divide-white/10">
+          {faqs.map((f, i) => (
+            <details class="group">
+              <summary class="cursor-pointer list-none px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-6 hover:bg-carbon-800 transition-colors">
+                <span class="font-display text-lg md:text-xl tracking-tight pr-4 text-balance">
+                  <span class="meta-strip text-cobalt-400 mr-4 inline-block">{`Q.${String(i + 1).padStart(2, '0')}`}</span>
+                  {f.q}
+                </span>
+                <span aria-hidden="true" class="text-2xl shrink-0 transition-transform group-open:rotate-45 text-cobalt-400">+</span>
+              </summary>
+              <div class="px-6 md:px-8 pb-7 md:pb-8 -mt-2 max-w-3xl text-ash-300 leading-relaxed text-pretty">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ENGAGEMENT */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-5">
+          <div class="meta-strip text-ash-500 border-t border-white/15 pt-4 max-w-xs mb-6">Engagement</div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">What working with us looks like.</h2>
+        </div>
+
+        <div class="col-span-12 md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Typical scope</div>
+            <div class="font-display text-2xl tracking-tight">$30K &ndash; $90K</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Fixed-fee build. Five to eight workflows depending on close shape.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Typical timeline</div>
+            <div class="font-display text-2xl tracking-tight">6 &ndash; 7 weeks</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Diagnose in week zero, full cutover by week six or seven.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Optional retainer</div>
+            <div class="font-display text-2xl tracking-tight">From $4K&thinsp;/&thinsp;mo</div>
+            <p class="text-ash-400 text-sm leading-relaxed">Reconciliation queue oversight, cadence tuning, new workflow additions.</p>
+          </div>
+          <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+            <div class="meta-strip text-cobalt-400">Not included</div>
+            <div class="font-display text-base leading-snug">Bookkeeping &middot; CFO advisory &middot; Big-ERP migrations</div>
+            <p class="text-ash-400 text-sm leading-relaxed">We don&rsquo;t replace finance. We delete the parts that shouldn&rsquo;t be theirs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* FINAL CTA */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden border-t border-cobalt-700/30">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+
+      <div class="container py-24 md:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip border-t border-carbon/40 pt-4 mb-8 max-w-xs flex justify-between">
+            <span>Next step</span>
+            <span>{code}.99</span>
+          </div>
+          <h2 class="font-display text-display-xl tracking-tightest text-balance">
+            Send us last month&rsquo;s close.
+          </h2>
+          <p class="mt-8 max-w-xl text-carbon/85 text-lg md:text-xl leading-snug text-balance">
+            Tell us how many days it took, where it got stuck, who chased what. We&rsquo;ll
+            tell you what we&rsquo;d automate first and what it would cost. If we&rsquo;re
+            not the right fit, we&rsquo;ll tell you who is.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-start-9 md:col-span-4 flex flex-col gap-6">
+          <a href="/#contact" class="group block bg-carbon text-white p-6 sm:p-8 hover:bg-carbon-700 transition-colors">
+            <div class="meta-strip text-cobalt-400 mb-4">Close Review</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min review.</div>
+            <div class="mt-6 meta-strip text-ash-400 flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+
+          <a href="/#services" class="group block border border-carbon/60 p-6 sm:p-8 hover:bg-carbon hover:text-white transition-colors">
+            <div class="meta-strip mb-4">More deployments</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">See all four capabilities.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>What We Deploy</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

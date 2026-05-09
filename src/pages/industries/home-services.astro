@@ -1,0 +1,346 @@
+---
+// =============================================================================
+// INDUSTRY PAGE — IND.03 Home Services
+// =============================================================================
+// Built from src/pages/industries/professional-services.astro (the template).
+// Source copy: cap-industry-home-services.md.
+// =============================================================================
+import Layout from '@/layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
+
+const code = 'IND.03';
+const kicker = 'Industries';
+const title = 'Home Services';
+const tagline = 'Built for trades that left the dispatch board behind in 2014.';
+const subhead =
+  'HVAC, plumbing, electrical, roofing, landscaping, pest, remodeling. Field crews on phones. Office staff on screens. We build the connective tissue between them so dispatch, invoicing, and customer follow-up stop bleeding hours.';
+
+const fitFor = [
+  '5 to 80 staff with at least one full-time dispatcher and one full-time bookkeeper, both of whom answer the phone too',
+  'Workflows hop between FSM software, accounting, the call center, the texting app, and a pile of paper tickets in the truck',
+  'Profitable but stuck — revenue grew, the office did not, and the owner is back to running dispatch on Saturdays',
+  "The owner can describe the broken workflow in 30 seconds and has paid for a 'complete platform' that solved 60% of it"
+];
+
+const patterns = [
+  {
+    title: 'Dispatch is the owner with a marker.',
+    body:
+      "ServiceTitan or Housecall Pro is the dispatch board. The truth lives in the owner's head, the WhatsApp group, and a magnetic whiteboard above the printer. Reschedules happen by yelling. Same-day callbacks get missed because nobody owns 'between calls.'"
+  },
+  {
+    title: 'Senior people are doing junior work.',
+    body:
+      "The owner runs payroll. The owner does collections. The owner closes the books. The owner answers the after-hours line because the answering service costs $200 a month and the owner doesn't trust it. Every senior person you can name is doing two roles, one of them a desk job."
+  },
+  {
+    title: "The office can't see what the field just did.",
+    body:
+      'A tech finishes a job, marks it complete on the iPad, drives off. The office finds out an hour later. The customer follow-up text goes out four hours after that. The estimate revision somebody asked for sits in a Notes app on a phone in a cup holder.'
+  },
+  {
+    title: "Tools don't talk and the bridge is a person.",
+    body:
+      'ServiceTitan and QuickBooks disagree on what got billed. The CRM and the dispatch board hold different customer phone numbers. Marketing platforms run on a list export from last quarter. Reconciling them is a Tuesday morning ritual nobody asked for.'
+  }
+];
+
+const deployments = [
+  {
+    code: 'DEP.01',
+    title: 'Enterprise AI Integration',
+    href: '/services/enterprise-ai-integration',
+    body:
+      'Claude wired into your call recordings, customer history, and FSM records: classifying inbound calls, drafting follow-up texts in your voice, scoring leads against your service area and capacity, flagging upsell opportunities from technician notes. Drafts route to dispatch — sends do not happen without a click.'
+  },
+  {
+    code: 'DEP.02',
+    title: 'Relational Data Architecture',
+    href: '/services/relational-data-architecture',
+    body:
+      'One database where customers, properties, equipment, jobs, invoices, and trucks live once. ServiceTitan, Housecall Pro, Jobber, QuickBooks, and your texting platform read from and write to it. Customer phone numbers, equipment model histories, and warranty dates finally agree across systems.'
+  },
+  {
+    code: 'DEP.03',
+    title: 'Ecosystem Orchestration',
+    href: '/services/ecosystem-orchestration',
+    body:
+      'Make.com or n8n routing the work end-to-end: inbound call to ticket to dispatch to invoice to payment to follow-up text to review request. Every leg logged. Every breakage caught. Dispatch stops being a person who has to be everywhere at once.'
+  },
+  {
+    code: 'DEP.04',
+    title: 'Financial & Operational Automation',
+    href: '/services/financial-operational-automation',
+    body:
+      'Invoices generated from completed jobs against your price book. Stripe and ACH reconciled to QuickBooks. Past-due AR routed to dispatch with one-click reminders. Tech utilization, average ticket, callback rate, and gross margin per truck — numbers on a dashboard, not a story.'
+  }
+];
+
+const stack = [
+  { label: 'FSM', items: 'ServiceTitan, Housecall Pro, Jobber, FieldEdge, Service Fusion' },
+  { label: 'Comms & review', items: 'OpenPhone, Twilio, Podium, NiceJob, Listen360' },
+  { label: 'Marketing', items: 'HubSpot, Mailchimp, ActiveCampaign, Beehiiv' },
+  { label: 'Accounting', items: 'QuickBooks Online, Xero, Stripe, Plaid' },
+  { label: 'AI core', items: 'Anthropic Claude, OpenAI, Google Gemini' },
+  { label: 'Automation', items: 'Make.com, n8n, Supabase, Airtable' }
+];
+
+const caseStudies = [
+  {
+    code: 'CS.03',
+    title: 'Field RFIs to office approvals in a single rhythm.',
+    impact: '−41% rework on submittals',
+    sector: 'Construction',
+    href: '/case-studies/field-to-office'
+  },
+  {
+    code: 'CS.02',
+    title: 'Brokerage pipeline fed straight into ledger and reporting.',
+    impact: '+1,800 hrs/yr returned to producers',
+    sector: 'Real Estate',
+    href: '/case-studies/brokerage-pipeline'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Do we have to throw out ServiceTitan or Housecall Pro?',
+    a: "No. The FSM stays. Most of our trades clients already pay for ServiceTitan, Housecall Pro, or Jobber and what they're missing isn't a new platform — it's the wiring between the platform and everything else. We've shipped against ServiceTitan's API, Housecall Pro's webhooks, and Jobber's data model. If you're on a smaller FSM we'll quote a 1 to 2 week ramp. We've never recommended a rip-and-replace."
+  },
+  {
+    q: 'Will an AI talk to our customers?',
+    a: "Not without an explicit click from somebody on your team. Models draft follow-up texts, callback messages, review requests, and quote summaries against your customer history and your voice. Drafts land in front of a dispatcher or a CSR. They approve, edit, or reject. Nothing autosends. Customers who hate getting fake-friendly automated messages don't get them. Customers who appreciate fast, accurate communication get it within minutes instead of hours."
+  },
+  {
+    q: 'How does this work with our price book and our markup rules?',
+    a: "We model your service catalog, parts markups, and member discount rules in the database before we automate anything. Quotes get generated against the rule set. Invoices get checked against the price book before they go out. If you change a markup, one config change updates every downstream surface. We've handled price books with 4,000 line items. We do not pretend yours is unusual."
+  },
+  {
+    q: "How long until dispatch stops being the owner's nights and weekends?",
+    a: 'Three weeks for first relief, six for full hand-off. By week three inbound call classification, ticket routing, and customer follow-up texts are running themselves. By week six the owner is approving exceptions, not running the board. If the owner is still dispatching at week six we owe you an explanation.'
+  },
+  {
+    q: 'Will this replace our office staff?',
+    a: "No, and we'll say no on the call. The office hours we eliminate are the ones nobody enjoyed — re-keying invoices, chasing AR, hand-coding GL entries, manually triaging callbacks. Most home-services clients have re-deployed CSRs and dispatchers to higher-yield work — proactive customer outreach, membership growth, technician scheduling — not laid them off. If you're hoping for a hidden RIF, we're the wrong vendor."
+  }
+];
+---
+<Layout
+  title={`${title} — Commonwealth AI Partners`}
+  description={subhead}
+>
+  <main>
+    {/* HERO */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div class="relative container min-h-[80vh] pt-28 md:pt-40 pb-16 grid grid-cols-12 gap-x-4 md:gap-x-6 grid-rows-[auto_1fr_auto]">
+        <div class="col-span-12 md:col-start-5 md:col-span-8 grid grid-cols-2 meta-strip">
+          <span class="border-t border-carbon/40 pt-4">{kicker}</span>
+          <span class="border-t border-carbon/40 pt-4 text-right">{code}</span>
+        </div>
+        <div class="col-span-12 md:col-span-10 row-start-2 mt-8 md:mt-12 flex flex-col gap-6 md:gap-8">
+          <h1 class="font-display text-display-xl tracking-tightest text-balance">{title}</h1>
+          <p class="font-display text-2xl md:text-4xl tracking-tight text-carbon/85 max-w-3xl text-balance">{tagline}</p>
+        </div>
+        <div class="col-span-12 md:col-span-8 row-start-3 mt-10 md:mt-12 flex flex-col gap-7">
+          <p class="text-lg md:text-xl text-carbon/85 leading-snug max-w-2xl text-balance text-pretty">{subhead}</p>
+          <div class="flex flex-wrap items-center gap-4 md:gap-6">
+            <a href="/#contact" class="group inline-flex items-center justify-between gap-6 h-12 sm:h-14 px-5 sm:px-7 bg-carbon text-white hover:bg-carbon-700 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors">
+              <span>Book an Ops Review</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+            <span class="meta-strip text-white">30 min &middot; If we&rsquo;re not the right fit, we&rsquo;ll tell you who is.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* FIT-FOR STRIP */}
+    <section class="relative bg-carbon-950 border-y border-cobalt-500/20 py-12 md:py-14">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-6 items-start">
+        <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">Fit check</div>
+        <ul class="col-span-12 md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+          {fitFor.map((f) => (
+            <li class="grid grid-cols-[1.25rem_1fr] gap-3 items-start text-ash-200 text-sm md:text-base">
+              <span class="text-cobalt-400 mt-2 inline-block w-2 h-2 bg-current"></span>
+              <span class="text-pretty">{f}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    {/* THE PATTERN */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/5">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-cobalt-400 border-t border-cobalt-500/40 pt-4">The Pattern</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            We&rsquo;ve seen this stack before.
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {patterns.map((p, i) => (
+            <article class="bg-carbon-900 p-8 sm:p-10 flex flex-col gap-5">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{`P.0${i + 1}`}</span>
+                <span class="text-ash-500">Symptom</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.1] text-balance">{p.title}</h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{p.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* WHAT WE DEPLOY */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">What We Deploy Here</div>
+          <div class="col-span-12 md:col-span-9 flex flex-col gap-3">
+            <h2 class="font-display text-display-lg tracking-tightest text-balance">All four capabilities, mapped to the work.</h2>
+            <p class="text-ash-400 text-base md:text-lg leading-relaxed max-w-2xl text-pretty">
+              You probably need two or three of these on day one. We tell you which on the
+              audit call.
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {deployments.map((d) => (
+            <a href={d.href} class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-6 hover:bg-carbon-800 transition-colors">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{d.code}</span>
+                <span class="text-ash-500 group-hover:text-cobalt-400 transition-colors">Open file &rarr;</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05]">{d.title}</h3>
+              <p class="text-ash-300 leading-relaxed text-pretty">{d.body}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* INDUSTRY STACK */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container grid grid-cols-12 gap-x-6 gap-y-12">
+        <div class="col-span-12 md:col-span-4">
+          <div class="meta-strip text-ash-500 border-t border-white/15 pt-4 max-w-xs mb-6">Stack</div>
+          <h2 class="font-display text-display-lg tracking-tightest text-balance">Tools we know inside out.</h2>
+          <p class="mt-6 text-ash-400 text-base leading-relaxed max-w-md text-pretty">
+            We&rsquo;ve shipped against all of these in production. If yours isn&rsquo;t
+            listed, we&rsquo;ll be honest about ramp time on the audit call.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {stack.map((s) => (
+            <div class="bg-carbon p-6 sm:p-8 flex flex-col gap-3">
+              <div class="meta-strip text-cobalt-400">{s.label}</div>
+              <p class="font-display text-base md:text-lg tracking-tight leading-snug text-balance">{s.items}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* CASE STUDIES */}
+    <section class="relative bg-carbon-900 py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">Receipts</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            What it looked like the last two times.
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          {caseStudies.map((s) => (
+            <a href={s.href} class="group bg-carbon-900 p-8 sm:p-10 flex flex-col gap-7 min-h-[360px] hover:bg-carbon-800 transition-colors">
+              <div class="flex items-center justify-between meta-strip">
+                <span class="text-cobalt-400">{s.code}</span>
+                <span class="text-ash-500">{s.sector}</span>
+              </div>
+              <h3 class="font-display text-2xl md:text-3xl tracking-tight leading-[1.05] text-balance flex-1">{s.title}</h3>
+              <div class="flex items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div class="meta-strip text-ash-500 mb-1">Impact</div>
+                  <div class="font-display text-cobalt-400 text-base md:text-lg">{s.impact}</div>
+                </div>
+                <span class="meta-strip text-ash-500 group-hover:text-cobalt-400 transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* FAQ */}
+    <section class="relative bg-carbon py-24 md:py-32 border-t border-white/10">
+      <div class="container">
+        <div class="grid grid-cols-12 gap-6 mb-12 md:mb-20 items-end">
+          <div class="col-span-12 md:col-span-3 meta-strip text-ash-500 border-t border-white/15 pt-4">FAQ</div>
+          <h2 class="col-span-12 md:col-span-9 font-display text-display-lg tracking-tightest text-balance">
+            What owners ask us before they hire us.
+          </h2>
+        </div>
+        <div class="border border-white/10 divide-y divide-white/10">
+          {faqs.map((f, i) => (
+            <details class="group">
+              <summary class="cursor-pointer list-none px-6 md:px-8 py-6 md:py-7 flex items-center justify-between gap-6 hover:bg-carbon-800 transition-colors">
+                <span class="font-display text-lg md:text-xl tracking-tight pr-4 text-balance">
+                  <span class="meta-strip text-cobalt-400 mr-4 inline-block">{`Q.${String(i + 1).padStart(2, '0')}`}</span>
+                  {f.q}
+                </span>
+                <span aria-hidden="true" class="text-2xl shrink-0 transition-transform group-open:rotate-45 text-cobalt-400">+</span>
+              </summary>
+              <div class="px-6 md:px-8 pb-7 md:pb-8 -mt-2 max-w-3xl text-ash-300 leading-relaxed text-pretty">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* FINAL CTA */}
+    <section class="relative bg-cobalt-500 text-carbon overflow-hidden border-t border-cobalt-700/30">
+      <div aria-hidden="true" class="absolute inset-y-0 left-1/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div aria-hidden="true" class="absolute inset-y-0 left-2/3 w-px bg-carbon/15 hidden md:block"></div>
+      <div class="container py-24 md:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+        <div class="col-span-12 md:col-span-7">
+          <div class="meta-strip border-t border-carbon/40 pt-4 mb-8 max-w-xs flex justify-between">
+            <span>Next step</span>
+            <span>{code}.99</span>
+          </div>
+          <h2 class="font-display text-display-xl tracking-tightest text-balance">
+            Show us your dispatch board on a Friday at 3pm.
+          </h2>
+          <p class="mt-8 max-w-xl text-carbon/85 text-lg md:text-xl leading-snug text-balance">
+            The reschedules, the same-day callbacks, the truck that just broke down on the way
+            to the third call. We&rsquo;ll tell you what we&rsquo;d build first to take an
+            hour back, then a day, then a Saturday.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-start-9 md:col-span-4 flex flex-col gap-6">
+          <a href="/#contact" class="group block bg-carbon text-white p-6 sm:p-8 hover:bg-carbon-700 transition-colors">
+            <div class="meta-strip text-cobalt-400 mb-4">Ops Review</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">Book a 30-min review.</div>
+            <div class="mt-6 meta-strip text-ash-400 flex items-center justify-between">
+              <span>30 min &middot; No deck &middot; No pitch</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+          <a href="/industries" class="group block border border-carbon/60 p-6 sm:p-8 hover:bg-carbon hover:text-white transition-colors">
+            <div class="meta-strip mb-4">Other industries</div>
+            <div class="font-display text-xl md:text-2xl tracking-tight">See all six.</div>
+            <div class="mt-6 meta-strip flex items-center justify-between">
+              <span>Industries</span>
+              <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
